@@ -1,0 +1,2955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alex Johnson - Premium Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'electric-blue': '#00E5FF',
+                        'cyber-purple': '#7C3AED',
+                        'deep-charcoal': '#0A0E1A',
+                        'gold': '#F59E0B',
+                        'neon-green': '#10B981',
+                        'accent-pink': '#EC4899',
+                        'accent-teal': '#06B6D4',
+                        'glass-white': 'rgba(255, 255, 255, 0.08)',
+                        'glass-border': 'rgba(255, 255, 255, 0.15)'
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                        'mono': ['JetBrains Mono', 'monospace']
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-glow': 'pulse-glow 2s ease-in-out infinite alternate',
+                        'gradient-shift': 'gradient-shift 3s ease infinite',
+                        'typewriter': 'typewriter 4s steps(40) 1s 1 normal both',
+                        'blink': 'blink 1s infinite',
+                        'particle-float': 'particle-float 20s linear infinite',
+                        'morph': 'morph 0.3s ease-in-out',
+                        'glow-pulse': 'glow-pulse 2s ease-in-out infinite',
+                        'slide-up': 'slide-up 0.6s ease-out',
+                        'scale-in': 'scale-in 0.5s ease-out'
+                    },
+                    backdropBlur: {
+                        'xs': '2px',
+                    },
+                    boxShadow: {
+                        'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
+                        'neon': '0 0 20px rgba(0, 212, 255, 0.5)',
+                        'purple-glow': '0 0 30px rgba(139, 92, 246, 0.3)',
+                        'gold-glow': '0 0 25px rgba(255, 215, 0, 0.4)'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        :root {
+            --primary-bg: #0A0E1A;
+            --secondary-bg: #1E293B;
+            --accent-blue: #00E5FF;
+            --accent-purple: #7C3AED;
+            --accent-gold: #F59E0B;
+            --accent-green: #10B981;
+            --accent-pink: #EC4899;
+            --accent-teal: #06B6D4;
+            --text-primary: #F8FAFC;
+            --text-secondary: #CBD5E1;
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.15);
+        }
+
+        [data-theme="light"] {
+            --primary-bg: #FFFFFF;
+            --secondary-bg: #F8FAFC;
+            --text-primary: #1A202C;
+            --text-secondary: #4A5568;
+            --glass-bg: rgba(0, 0, 0, 0.05);
+            --glass-border: rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--primary-bg);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        /* Custom Cursor */
+        .cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(45deg, var(--accent-blue), var(--accent-purple));
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease;
+            mix-blend-mode: difference;
+        }
+
+        .cursor-follower {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--accent-blue);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            transition: all 0.3s ease;
+            opacity: 0.5;
+        }
+
+        /* Glassmorphism */
+        .glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+
+        /* Particle Background */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--accent-blue);
+            border-radius: 50%;
+            animation: particle-float 20s linear infinite;
+            opacity: 0.6;
+        }
+
+        /* Floating Shapes */
+        .floating-shape {
+            position: absolute;
+            opacity: 0.1;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-shape:nth-child(odd) {
+            animation-delay: -3s;
+        }
+
+        /* Gradient Animations */
+        .gradient-bg {
+            background: linear-gradient(-45deg, var(--accent-blue), var(--accent-purple), var(--accent-teal), var(--accent-pink));
+            background-size: 400% 400%;
+            animation: gradient-shift 8s ease infinite;
+        }
+
+        /* Neumorphism */
+        .neumorphic {
+            background: var(--secondary-bg);
+            box-shadow: 
+                20px 20px 60px rgba(0, 0, 0, 0.3),
+                -20px -20px 60px rgba(255, 255, 255, 0.05);
+        }
+
+        /* Typewriter Effect */
+        .typewriter {
+            overflow: hidden;
+            border-right: 3px solid var(--accent-blue);
+            white-space: nowrap;
+            animation: typewriter 4s steps(40) 1s 1 normal both, blink 1s infinite;
+        }
+
+        /* Skill Progress Rings */
+        .progress-ring {
+            transform: rotate(-90deg);
+        }
+
+        .progress-ring-circle {
+            transition: stroke-dasharray 0.35s;
+            transform-origin: 50% 50%;
+        }
+
+        /* Interactive Timeline */
+        .timeline-item {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-item:hover {
+            transform: translateX(10px);
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -20px;
+            top: 50%;
+            width: 12px;
+            height: 12px;
+            background: var(--accent-blue);
+            border-radius: 50%;
+            transform: translateY(-50%);
+            box-shadow: 0 0 20px var(--accent-blue);
+        }
+
+        /* Hover Effects */
+        .hover-lift {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Glowing Elements */
+        .glow {
+            position: relative;
+        }
+
+        .glow::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: inherit;
+            border-radius: inherit;
+            filter: blur(20px);
+            opacity: 0.7;
+            z-index: -1;
+        }
+
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading-logo {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+
+        /* Edit Mode Styles */
+        .edit-icon {
+            display: none;
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: var(--accent-blue);
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            z-index: 10;
+            box-shadow: 0 0 15px var(--accent-blue);
+        }
+
+        .edit-mode .edit-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .editable {
+            position: relative;
+        }
+
+        .edit-mode .editable:hover {
+            outline: 2px dashed var(--accent-blue);
+            outline-offset: 4px;
+            background: rgba(0, 212, 255, 0.1);
+        }
+
+
+
+        /* Keyframes */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        @keyframes pulse-glow {
+            0% { text-shadow: 0 0 20px var(--accent-blue); }
+            100% { text-shadow: 0 0 30px var(--accent-purple), 0 0 40px var(--accent-blue); }
+        }
+
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes typewriter {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes blink {
+            from, to { border-color: transparent; }
+            50% { border-color: var(--accent-blue); }
+        }
+
+        @keyframes particle-float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+
+        @keyframes glow-pulse {
+            0%, 100% { box-shadow: 0 0 20px var(--accent-blue); }
+            50% { box-shadow: 0 0 40px var(--accent-purple), 0 0 60px var(--accent-blue); }
+        }
+
+        @keyframes slide-up {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes scale-in {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .cursor, .cursor-follower { display: none; }
+        }
+
+        /* Smooth Scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Selection Styling */
+        ::selection {
+            background: var(--accent-blue);
+            color: white;
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--primary-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(var(--accent-blue), var(--accent-purple));
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(var(--accent-purple), var(--accent-blue));
+        }
+    </style>
+</head>
+<body class="bg-deep-charcoal text-white">
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="loading-screen">
+        <div class="loading-logo" id="loadingLogo">MR</div>
+    </div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
+    <!-- Particle Background -->
+    <div class="particles" id="particles"></div>
+
+
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full glass z-50 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="font-mono font-bold text-2xl bg-gradient-to-r from-electric-blue to-cyber-purple bg-clip-text text-transparent">
+                    &lt;AJ/&gt;
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#hero" class="nav-link relative text-white/80 hover:text-electric-blue transition-colors">Home</a>
+                    <a href="#about" class="nav-link relative text-white/80 hover:text-electric-blue transition-colors">About</a>
+                    <a href="#experience" class="nav-link relative text-white/80 hover:text-electric-blue transition-colors">Experience</a>
+                    <a href="#projects" class="nav-link relative text-white/80 hover:text-electric-blue transition-colors">Projects</a>
+                    <a href="#skills" class="nav-link relative text-white/80 hover:text-electric-blue transition-colors">Skills</a>
+                    <a href="#contact" class="nav-link relative text-white/80 hover:text-electric-blue transition-colors">Contact</a>
+                    
+                    <!-- Theme & Data Controls -->
+                    <div class="flex items-center space-x-3 ml-6 pl-6 border-l border-white/20">
+                        <button id="dataStatus" class="w-9 h-9 glass rounded-full flex items-center justify-center text-neon-green hover:text-electric-blue hover:scale-110 transition-all" title="Data persistence status">
+                            <i class="fas fa-database text-sm"></i>
+                        </button>
+                        <button id="themeToggle" class="w-9 h-9 glass rounded-full flex items-center justify-center text-white hover:text-electric-blue hover:scale-110 transition-all">
+                            <i class="fas fa-moon text-sm"></i>
+                        </button>
+                    </div>
+                </div>
+                <button class="md:hidden text-white">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="min-h-screen relative overflow-hidden flex items-center">
+        <!-- Floating Shapes -->
+        <div class="floating-shape absolute top-20 left-10 w-20 h-20 bg-gradient-to-r from-electric-blue to-accent-teal rounded-full"></div>
+        <div class="floating-shape absolute top-40 right-20 w-16 h-16 bg-gradient-to-r from-cyber-purple to-accent-pink transform rotate-45"></div>
+        <div class="floating-shape absolute bottom-20 left-1/4 w-12 h-12 bg-gradient-to-r from-gold to-neon-green rounded-full"></div>
+
+        <div class="max-w-7xl mx-auto px-6 py-20 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="space-y-8" data-aos="fade-right">
+                    <div class="editable relative">
+                        <i class="fas fa-edit edit-icon" onclick="editContent(this)"></i>
+                        <div class="text-electric-blue font-mono text-lg mb-4" data-field="greeting">
+                            Hello, I'm
+                        </div>
+                    </div>
+                    <div class="editable relative">
+                        <i class="fas fa-edit edit-icon" onclick="editContent(this)"></i>
+                        <h1 class="font-inter font-black text-6xl lg:text-8xl mb-6 bg-gradient-to-r from-white via-electric-blue to-cyber-purple bg-clip-text text-transparent typewriter" 
+                            data-field="name" onclick="handleNameClick(event)">
+                            Alex Johnson
+                        </h1>
+                    </div>
+                    <div class="editable relative">
+                        <i class="fas fa-edit edit-icon" onclick="editContent(this)"></i>
+                        <h2 class="font-inter font-bold text-2xl lg:text-4xl text-white/90 mb-8" data-field="title">
+                            Full-Stack Developer & Data Scientist
+                        </h2>
+                    </div>
+                    <div class="editable relative">
+                        <i class="fas fa-edit edit-icon" onclick="editContent(this)"></i>
+                        <p class="text-xl text-white/70 leading-relaxed mb-8 max-w-2xl" data-field="hero-description">
+                            Crafting innovative digital experiences with cutting-edge technology. 
+                            Specializing in AI/ML, full-stack development, and data-driven solutions.
+                        </p>
+                    </div>
+                    
+                    <div class="flex flex-wrap gap-6">
+                        <button onclick="downloadResume()" class="group relative px-8 py-4 bg-gradient-to-r from-electric-blue to-cyber-purple rounded-xl font-semibold text-white overflow-hidden hover-lift glow">
+                            <span class="relative z-10 flex items-center">
+                                <i class="fas fa-download mr-3"></i>
+                                <span id="downloadResumeText">Download Resume</span>
+                            </span>
+                            <div class="absolute inset-0 bg-gradient-to-r from-cyber-purple to-electric-blue opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        </button>
+                        <button id="uploadResumeBtn" class="group relative px-8 py-4 glass rounded-xl font-semibold text-white border border-electric-blue/30 hover-lift" style="display: none;">
+                            <span class="flex items-center">
+                                <i class="fas fa-upload mr-3"></i>
+                                Upload Resume
+                            </span>
+                        </button>
+                        <button id="exportDataBtn" class="group relative px-6 py-3 glass rounded-xl font-semibold text-gold border border-gold/30 hover-lift" style="display: none;" onclick="exportPortfolioData()">
+                            <span class="flex items-center">
+                                <i class="fas fa-file-export mr-2"></i>
+                                Export Data
+                            </span>
+                        </button>
+                        <button id="importDataBtn" class="group relative px-6 py-3 glass rounded-xl font-semibold text-neon-green border border-neon-green/30 hover-lift" style="display: none;" onclick="document.getElementById('importFile').click()">
+                            <span class="flex items-center">
+                                <i class="fas fa-file-import mr-2"></i>
+                                Import Data
+                            </span>
+                        </button>
+                        <button id="customizeLogoBtn" class="group relative px-6 py-3 glass rounded-xl font-semibold text-accent-pink border border-accent-pink/30 hover-lift" style="display: none;" onclick="openLogoCustomizer()">
+                            <span class="flex items-center">
+                                <i class="fas fa-palette mr-2"></i>
+                                Customize Logo
+                            </span>
+                        </button>
+                        <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importPortfolioData(event)">
+                    </div>
+
+                    <div class="flex gap-6 pt-8 editable relative" id="socialLinksContainer">
+                        <i class="fas fa-edit edit-icon" onclick="editSocialLinks(this)"></i>
+                        <a href="#" class="social-icon w-12 h-12 glass rounded-full flex items-center justify-center text-white hover:text-electric-blue hover:scale-110 transition-all" data-platform="linkedin" data-url="#">
+                            <i class="fab fa-linkedin text-xl"></i>
+                        </a>
+                        <a href="#" class="social-icon w-12 h-12 glass rounded-full flex items-center justify-center text-white hover:text-electric-blue hover:scale-110 transition-all" data-platform="github" data-url="#">
+                            <i class="fab fa-github text-xl"></i>
+                        </a>
+                        <a href="#" class="social-icon w-12 h-12 glass rounded-full flex items-center justify-center text-white hover:text-electric-blue hover:scale-110 transition-all" data-platform="twitter" data-url="#">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                        <a href="#" class="social-icon w-12 h-12 glass rounded-full flex items-center justify-center text-white hover:text-electric-blue hover:scale-110 transition-all" data-platform="kaggle" data-url="#">
+                            <i class="fab fa-kaggle text-xl"></i>
+                        </a>
+                    </div>
+                    
+                    <div class="text-center mt-8">
+                        <button id="addSocialBtn" class="glass rounded-xl px-6 py-3 text-electric-blue border border-electric-blue/30 hover:bg-electric-blue/10 transition-all" style="display: none;" onclick="addSocialLink()">
+                            <i class="fas fa-plus mr-2"></i>Add Social Link
+                        </button>
+                    </div>
+                </div>
+
+                <div class="relative" data-aos="fade-left">
+                    <div class="editable relative">
+                        <i class="fas fa-edit edit-icon" onclick="editProfilePhoto(this)"></i>
+                        <div class="relative w-96 h-96 mx-auto">
+                            <!-- Animated Border -->
+                            <div class="absolute inset-0 bg-gradient-to-r from-electric-blue via-cyber-purple to-gold rounded-full animate-spin" style="animation-duration: 8s;"></div>
+                            <div class="absolute inset-2 bg-deep-charcoal rounded-full flex items-center justify-center overflow-hidden">
+                                <div id="profileImageContainer" class="w-80 h-80 bg-gradient-to-br from-electric-blue/20 to-cyber-purple/20 rounded-full flex items-center justify-center text-6xl text-white/50">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-32 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-20" data-aos="fade-up">
+                <h2 class="font-inter font-black text-5xl lg:text-6xl mb-6 bg-gradient-to-r from-electric-blue to-cyber-purple bg-clip-text text-transparent">
+                    About Me
+                </h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-electric-blue to-cyber-purple mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="space-y-8" data-aos="fade-right">
+                    <div class="editable relative">
+                        <i class="fas fa-edit edit-icon" onclick="editContent(this)"></i>
+                        <p class="text-xl text-white/80 leading-relaxed text-center" data-field="about-text">
+                            I'm a passionate technologist with over 5 years of experience in creating innovative solutions 
+                            that bridge the gap between complex data and meaningful insights. My journey spans from 
+                            full-stack development to advanced machine learning, always with a focus on delivering 
+                            exceptional user experiences.
+                        </p>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-8">
+                        <div class="glass rounded-2xl p-6 hover-lift" data-aos="fade-up" data-aos-delay="100">
+                            <div class="editable relative">
+                                <i class="fas fa-edit edit-icon" onclick="editCardIcon(this)"></i>
+                                <div class="text-3xl text-electric-blue mb-4">
+                                    <i class="fas fa-code" data-field="fullstack-icon"></i>
+                                </div>
+                            </div>
+                            <div class="editable relative">
+                                <i class="fas fa-edit edit-icon" onclick="editContent(this)"></i>
+                                <h3 class="font-bold text-xl mb-2" data-field="fullstack-title">Full-Stack Development</h3>
+                            </div>
+                            <div class="editable relative">
+                                <i class="fas fa-edit edit-icon" onclick="editContent(this)"></i>
+                                <p class="text-white/70" data-field="fullstack-description">Modern web applications with React, Node.js, and cloud technologies</p>
+                            </div>
+                        </div>
+                        <div class="glass rounded-2xl p-6 hover-lift" data-aos="fade-up" data-aos-delay="200">
+                            <div class="editable relative">
+                                <i class="fas fa-edit edit-icon" onclick="editCardIcon(this)"></i>
+                                <div class="text-3xl text-cyber-purple mb-4">
+                                    <i class="fas fa-brain" data-field="ai-ml-icon"></i>
+                                </div>
+                            </div>
+                            <div class="editable relative">
+                                <i class="fas fa-edit edit-icon" onclick="editContent(this)"></i>
+                                <h3 class="font-bold text-xl mb-2" data-field="ai-ml-title">AI & Machine Learning</h3>
+                            </div>
+                            <div class="editable relative">
+                                <i class="fas fa-edit edit-icon" onclick="editContent(this)"></i>
+                                <p class="text-white/70" data-field="ai-ml-description">Deep learning models and intelligent automation solutions</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative editable" data-aos="fade-left">
+                    <i class="fas fa-edit edit-icon" onclick="editStatsCards(this)"></i>
+                    <div class="glass rounded-3xl p-8 space-y-6" id="statsContainer">
+                        <div class="flex items-center justify-between stat-item" data-label="Experience" data-value="5+ Years" data-color="electric-blue">
+                            <span class="text-white/80">Experience</span>
+                            <span class="text-2xl font-bold text-electric-blue">5+ Years</span>
+                            <button class="delete-stat-btn hidden ml-4 text-red-400 hover:text-red-300" onclick="deleteStat(this)">
+                                <i class="fas fa-trash text-sm"></i>
+                            </button>
+                        </div>
+                        <div class="flex items-center justify-between stat-item" data-label="Projects Completed" data-value="50+" data-color="cyber-purple">
+                            <span class="text-white/80">Projects Completed</span>
+                            <span class="text-2xl font-bold text-cyber-purple">50+</span>
+                            <button class="delete-stat-btn hidden ml-4 text-red-400 hover:text-red-300" onclick="deleteStat(this)">
+                                <i class="fas fa-trash text-sm"></i>
+                            </button>
+                        </div>
+                        <div class="flex items-center justify-between stat-item" data-label="Happy Clients" data-value="30+" data-color="gold">
+                            <span class="text-white/80">Happy Clients</span>
+                            <span class="text-2xl font-bold text-gold">30+</span>
+                            <button class="delete-stat-btn hidden ml-4 text-red-400 hover:text-red-300" onclick="deleteStat(this)">
+                                <i class="fas fa-trash text-sm"></i>
+                            </button>
+                        </div>
+                        <div class="flex items-center justify-between stat-item" data-label="Technologies Mastered" data-value="25+" data-color="neon-green">
+                            <span class="text-white/80">Technologies Mastered</span>
+                            <span class="text-2xl font-bold text-neon-green">25+</span>
+                            <button class="delete-stat-btn hidden ml-4 text-red-400 hover:text-red-300" onclick="deleteStat(this)">
+                                <i class="fas fa-trash text-sm"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="text-center mt-6">
+                        <button id="addStatBtn" class="glass rounded-xl px-6 py-3 text-electric-blue border border-electric-blue/30 hover:bg-electric-blue/10 transition-all" style="display: none;" onclick="addStat()">
+                            <i class="fas fa-plus mr-2"></i>Add Stat
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="py-32 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-20" data-aos="fade-up">
+                <h2 class="font-inter font-black text-5xl lg:text-6xl mb-6 bg-gradient-to-r from-cyber-purple via-accent-pink to-accent-teal bg-clip-text text-transparent">
+                    Experience
+                </h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-cyber-purple via-accent-pink to-accent-teal mx-auto rounded-full"></div>
+            </div>
+
+            <div class="relative">
+                <!-- Timeline Line -->
+                <div class="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-electric-blue to-cyber-purple"></div>
+
+                <div class="space-y-16" id="experienceContainer">
+                    <div class="timeline-item glass rounded-2xl p-8 ml-20 hover-lift editable relative" data-aos="fade-left">
+                        <i class="fas fa-edit edit-icon" onclick="editExperience(this)"></i>
+                        <button class="delete-experience-btn hidden absolute top-4 right-16 text-red-400 hover:text-red-300 z-10" onclick="deleteExperience(this)">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-6">
+                            <div>
+                                <div class="editable relative">
+                                    <i class="fas fa-edit edit-icon" onclick="editContent(this)"></i>
+                                    <h3 class="font-bold text-2xl text-white mb-2" data-field="exp1-role">Senior Data Scientist</h3>
+                                </div>
+                                <div class="editable relative">
+                                    <i class="fas fa-edit edit-icon" onclick="editContent(this)"></i>
+                                    <p class="text-electric-blue font-semibold text-lg" data-field="exp1-company">TechCorp Solutions</p>
+                                </div>
+                            </div>
+                            <div class="editable relative">
+                                <i class="fas fa-edit edit-icon" onclick="editContent(this)"></i>
+                                <div class="text-cyber-purple font-mono font-semibold" data-field="exp1-duration">2021 - Present</div>
+                            </div>
+                        </div>
+                        <div class="editable relative">
+                            <i class="fas fa-edit edit-icon" onclick="editContent(this)"></i>
+                            <div class="space-y-3 text-white/80" data-field="exp1-achievements">
+                                <p>• Led a team of 5 data scientists in developing ML models that increased revenue by 25%</p>
+                                <p>• Implemented automated data pipelines processing 10TB+ daily data</p>
+                                <p>• Designed and deployed real-time recommendation systems serving 1M+ users</p>
+                            </div>
+                        </div>
+                        <div class="editable relative">
+                            <i class="fas fa-edit edit-icon" onclick="editTechTags(this)"></i>
+                            <div class="flex flex-wrap gap-2 mt-6" data-field="exp1-technologies">
+                                <span class="px-3 py-1 bg-electric-blue/20 text-electric-blue rounded-full text-sm">Python</span>
+                                <span class="px-3 py-1 bg-cyber-purple/20 text-cyber-purple rounded-full text-sm">TensorFlow</span>
+                                <span class="px-3 py-1 bg-gold/20 text-gold rounded-full text-sm">AWS</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item glass rounded-2xl p-8 ml-20 hover-lift editable relative" data-aos="fade-left" data-aos-delay="100">
+                        <i class="fas fa-edit edit-icon" onclick="editExperience(this)"></i>
+                        <button class="delete-experience-btn hidden absolute top-4 right-16 text-red-400 hover:text-red-300 z-10" onclick="deleteExperience(this)">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-6">
+                            <div>
+                                <div class="editable relative">
+                                    <i class="fas fa-edit edit-icon" onclick="editContent(this)"></i>
+                                    <h3 class="font-bold text-2xl text-white mb-2" data-field="exp2-role">Full-Stack Developer</h3>
+                                </div>
+                                <div class="editable relative">
+                                    <i class="fas fa-edit edit-icon" onclick="editContent(this)"></i>
+                                    <p class="text-electric-blue font-semibold text-lg" data-field="exp2-company">InnovateLab</p>
+                                </div>
+                            </div>
+                            <div class="editable relative">
+                                <i class="fas fa-edit edit-icon" onclick="editContent(this)"></i>
+                                <div class="text-cyber-purple font-mono font-semibold" data-field="exp2-duration">2019 - 2021</div>
+                            </div>
+                        </div>
+                        <div class="editable relative">
+                            <i class="fas fa-edit edit-icon" onclick="editContent(this)"></i>
+                            <div class="space-y-3 text-white/80" data-field="exp2-achievements">
+                                <p>• Developed 15+ responsive web applications using React and Node.js</p>
+                                <p>• Optimized database performance resulting in 40% faster query execution</p>
+                                <p>• Implemented CI/CD pipelines reducing deployment time by 60%</p>
+                            </div>
+                        </div>
+                        <div class="editable relative">
+                            <i class="fas fa-edit edit-icon" onclick="editTechTags(this)"></i>
+                            <div class="flex flex-wrap gap-2 mt-6" data-field="exp2-technologies">
+                                <span class="px-3 py-1 bg-electric-blue/20 text-electric-blue rounded-full text-sm">React</span>
+                                <span class="px-3 py-1 bg-cyber-purple/20 text-cyber-purple rounded-full text-sm">Node.js</span>
+                                <span class="px-3 py-1 bg-gold/20 text-gold rounded-full text-sm">MongoDB</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-12">
+                    <button id="addExperienceBtn" class="glass rounded-xl px-6 py-3 text-electric-blue border border-electric-blue/30 hover:bg-electric-blue/10 transition-all" style="display: none;">
+                        <i class="fas fa-plus mr-2"></i>Add Experience
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-32 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-20" data-aos="fade-up">
+                <h2 class="font-inter font-black text-5xl lg:text-6xl mb-6 bg-gradient-to-r from-gold via-accent-pink to-electric-blue bg-clip-text text-transparent">
+                    Featured Projects
+                </h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-gold via-accent-pink to-electric-blue mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid lg:grid-cols-3 gap-8" id="projectsContainer">
+                <div class="group glass rounded-2xl overflow-hidden hover-lift editable relative" data-aos="fade-up">
+                    <i class="fas fa-edit edit-icon" onclick="editProject(this)"></i>
+                    <button class="delete-project-btn hidden absolute top-4 right-16 text-red-400 hover:text-red-300 z-10" onclick="deleteProject(this)">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                    <div class="editable relative">
+                        <i class="fas fa-edit edit-icon" onclick="editProjectIcon(this)"></i>
+                        <div class="relative h-64 bg-gradient-to-br from-electric-blue/20 to-cyber-purple/20 flex items-center justify-center overflow-hidden" data-field="proj1-background">
+                            <div class="text-6xl text-white/30 group-hover:scale-110 transition-transform">
+                                <i class="fas fa-chart-line" data-field="proj1-icon"></i>
+                            </div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <div class="editable relative">
+                            <i class="fas fa-edit edit-icon" onclick="editContent(this)"></i>
+                            <h3 class="font-bold text-2xl text-white mb-4" data-field="proj1-title">AI Trading Bot</h3>
+                        </div>
+                        <div class="editable relative">
+                            <i class="fas fa-edit edit-icon" onclick="editContent(this)"></i>
+                            <p class="text-white/70 mb-6 leading-relaxed" data-field="proj1-description">
+                                Advanced machine learning algorithm for automated trading with 85% accuracy rate and comprehensive risk management.
+                            </p>
+                        </div>
+                        <div class="editable relative">
+                            <i class="fas fa-edit edit-icon" onclick="editTechTags(this)"></i>
+                            <div class="flex flex-wrap gap-2 mb-6" data-field="proj1-technologies">
+                                <span class="px-3 py-1 bg-electric-blue/20 text-electric-blue rounded-full text-sm">Python</span>
+                                <span class="px-3 py-1 bg-cyber-purple/20 text-cyber-purple rounded-full text-sm">TensorFlow</span>
+                                <span class="px-3 py-1 bg-gold/20 text-gold rounded-full text-sm">AWS</span>
+                            </div>
+                        </div>
+                        <div class="editable relative">
+                            <i class="fas fa-edit edit-icon" onclick="editProjectLinks(this)"></i>
+                            <div class="flex gap-4" data-field="proj1-links">
+                                <a href="#" class="text-electric-blue hover:text-white transition-colors" data-link="github">
+                                    <i class="fab fa-github text-xl"></i>
+                                </a>
+                                <a href="#" class="text-electric-blue hover:text-white transition-colors" data-link="demo">
+                                    <i class="fas fa-external-link-alt text-xl"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="group glass rounded-2xl overflow-hidden hover-lift editable relative" data-aos="fade-up" data-aos-delay="100">
+                    <i class="fas fa-edit edit-icon" onclick="editProject(this)"></i>
+                    <button class="delete-project-btn hidden absolute top-4 right-16 text-red-400 hover:text-red-300 z-10" onclick="deleteProject(this)">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                    <div class="editable relative">
+                        <i class="fas fa-edit edit-icon" onclick="editProjectIcon(this)"></i>
+                        <div class="relative h-64 bg-gradient-to-br from-cyber-purple/20 to-gold/20 flex items-center justify-center overflow-hidden" data-field="proj2-background">
+                            <div class="text-6xl text-white/30 group-hover:scale-110 transition-transform">
+                                <i class="fas fa-brain" data-field="proj2-icon"></i>
+                            </div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <div class="editable relative">
+                            <i class="fas fa-edit edit-icon" onclick="editContent(this)"></i>
+                            <h3 class="font-bold text-2xl text-white mb-4" data-field="proj2-title">NLP Sentiment Engine</h3>
+                        </div>
+                        <div class="editable relative">
+                            <i class="fas fa-edit edit-icon" onclick="editContent(this)"></i>
+                            <p class="text-white/70 mb-6 leading-relaxed" data-field="proj2-description">
+                                Real-time sentiment analysis platform processing social media data with 92% accuracy using transformer models.
+                            </p>
+                        </div>
+                        <div class="editable relative">
+                            <i class="fas fa-edit edit-icon" onclick="editTechTags(this)"></i>
+                            <div class="flex flex-wrap gap-2 mb-6" data-field="proj2-technologies">
+                                <span class="px-3 py-1 bg-electric-blue/20 text-electric-blue rounded-full text-sm">Python</span>
+                                <span class="px-3 py-1 bg-cyber-purple/20 text-cyber-purple rounded-full text-sm">BERT</span>
+                                <span class="px-3 py-1 bg-gold/20 text-gold rounded-full text-sm">Docker</span>
+                            </div>
+                        </div>
+                        <div class="editable relative">
+                            <i class="fas fa-edit edit-icon" onclick="editProjectLinks(this)"></i>
+                            <div class="flex gap-4" data-field="proj2-links">
+                                <a href="#" class="text-electric-blue hover:text-white transition-colors" data-link="github">
+                                    <i class="fab fa-github text-xl"></i>
+                                </a>
+                                <a href="#" class="text-electric-blue hover:text-white transition-colors" data-link="demo">
+                                    <i class="fas fa-external-link-alt text-xl"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="group glass rounded-2xl overflow-hidden hover-lift editable relative" data-aos="fade-up" data-aos-delay="200">
+                    <i class="fas fa-edit edit-icon" onclick="editProject(this)"></i>
+                    <button class="delete-project-btn hidden absolute top-4 right-16 text-red-400 hover:text-red-300 z-10" onclick="deleteProject(this)">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                    <div class="editable relative">
+                        <i class="fas fa-edit edit-icon" onclick="editProjectIcon(this)"></i>
+                        <div class="relative h-64 bg-gradient-to-br from-gold/20 to-neon-green/20 flex items-center justify-center overflow-hidden" data-field="proj3-background">
+                            <div class="text-6xl text-white/30 group-hover:scale-110 transition-transform">
+                                <i class="fas fa-mobile-alt" data-field="proj3-icon"></i>
+                            </div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <div class="editable relative">
+                            <i class="fas fa-edit edit-icon" onclick="editContent(this)"></i>
+                            <h3 class="font-bold text-2xl text-white mb-4" data-field="proj3-title">HealthTech Platform</h3>
+                        </div>
+                        <div class="editable relative">
+                            <i class="fas fa-edit edit-icon" onclick="editContent(this)"></i>
+                            <p class="text-white/70 mb-6 leading-relaxed" data-field="proj3-description">
+                                Comprehensive health monitoring application with AI-powered insights and personalized recommendations.
+                            </p>
+                        </div>
+                        <div class="editable relative">
+                            <i class="fas fa-edit edit-icon" onclick="editTechTags(this)"></i>
+                            <div class="flex flex-wrap gap-2 mb-6" data-field="proj3-technologies">
+                                <span class="px-3 py-1 bg-electric-blue/20 text-electric-blue rounded-full text-sm">React Native</span>
+                                <span class="px-3 py-1 bg-cyber-purple/20 text-cyber-purple rounded-full text-sm">Node.js</span>
+                                <span class="px-3 py-1 bg-gold/20 text-gold rounded-full text-sm">MongoDB</span>
+                            </div>
+                        </div>
+                        <div class="editable relative">
+                            <i class="fas fa-edit edit-icon" onclick="editProjectLinks(this)"></i>
+                            <div class="flex gap-4" data-field="proj3-links">
+                                <a href="#" class="text-electric-blue hover:text-white transition-colors" data-link="github">
+                                    <i class="fab fa-github text-xl"></i>
+                                </a>
+                                <a href="#" class="text-electric-blue hover:text-white transition-colors" data-link="demo">
+                                    <i class="fas fa-external-link-alt text-xl"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-12">
+                <button id="addProjectBtn" class="glass rounded-xl px-6 py-3 text-electric-blue border border-electric-blue/30 hover:bg-electric-blue/10 transition-all" style="display: none;">
+                    <i class="fas fa-plus mr-2"></i>Add Project
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-32 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-20" data-aos="fade-up">
+                <h2 class="font-inter font-black text-5xl lg:text-6xl mb-6 bg-gradient-to-r from-neon-green via-accent-teal to-cyber-purple bg-clip-text text-transparent">
+                    Technical Skills
+                </h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-neon-green via-accent-teal to-cyber-purple mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid lg:grid-cols-3 gap-12">
+                <!-- Programming Languages -->
+                <div class="glass rounded-2xl p-8 hover-lift editable relative" data-aos="fade-up">
+                    <i class="fas fa-edit edit-icon" onclick="editContent(this)"></i>
+                    <h3 class="font-bold text-2xl text-center mb-8 text-electric-blue" data-field="programming-languages-title">Programming Languages</h3>
+                    <div class="space-y-6">
+                        <div class="skill-item editable relative">
+                            <i class="fas fa-edit edit-icon" onclick="editSkillItem(this)"></i>
+                            <div class="flex justify-between mb-3">
+                                <span class="font-semibold text-white" data-field="skill-python-name">Python</span>
+                                <span class="text-electric-blue font-mono" data-field="skill-python-level">95%</span>
+                            </div>
+                            <div class="relative">
+                                <div class="w-full h-3 bg-white/10 rounded-full overflow-hidden">
+                                    <div class="skill-progress h-full bg-gradient-to-r from-electric-blue to-cyber-purple rounded-full transition-all duration-1000 ease-out" data-width="95"></div>
+                                </div>
+                                <div class="absolute right-0 top-0 w-3 h-3 bg-electric-blue rounded-full animate-pulse"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item editable relative">
+                            <i class="fas fa-edit edit-icon" onclick="editSkillItem(this)"></i>
+                            <div class="flex justify-between mb-3">
+                                <span class="font-semibold text-white" data-field="skill-javascript-name">JavaScript</span>
+                                <span class="text-electric-blue font-mono" data-field="skill-javascript-level">90%</span>
+                            </div>
+                            <div class="relative">
+                                <div class="w-full h-3 bg-white/10 rounded-full overflow-hidden">
+                                    <div class="skill-progress h-full bg-gradient-to-r from-electric-blue to-cyber-purple rounded-full transition-all duration-1000 ease-out" data-width="90"></div>
+                                </div>
+                                <div class="absolute right-0 top-0 w-3 h-3 bg-electric-blue rounded-full animate-pulse"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item editable relative">
+                            <i class="fas fa-edit edit-icon" onclick="editSkillItem(this)"></i>
+                            <div class="flex justify-between mb-3">
+                                <span class="font-semibold text-white" data-field="skill-typescript-name">TypeScript</span>
+                                <span class="text-electric-blue font-mono" data-field="skill-typescript-level">85%</span>
+                            </div>
+                            <div class="relative">
+                                <div class="w-full h-3 bg-white/10 rounded-full overflow-hidden">
+                                    <div class="skill-progress h-full bg-gradient-to-r from-electric-blue to-cyber-purple rounded-full transition-all duration-1000 ease-out" data-width="85"></div>
+                                </div>
+                                <div class="absolute right-0 top-0 w-3 h-3 bg-electric-blue rounded-full animate-pulse"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Frameworks & Libraries -->
+                <div class="glass rounded-2xl p-8 hover-lift editable relative" data-aos="fade-up" data-aos-delay="100">
+                    <i class="fas fa-edit edit-icon" onclick="editContent(this)"></i>
+                    <h3 class="font-bold text-2xl text-center mb-8 text-cyber-purple" data-field="frameworks-libraries-title">Frameworks & Libraries</h3>
+                    <div class="space-y-6">
+                        <div class="skill-item editable relative">
+                            <i class="fas fa-edit edit-icon" onclick="editSkillItem(this)"></i>
+                            <div class="flex justify-between mb-3">
+                                <span class="font-semibold text-white" data-field="skill-react-name">React</span>
+                                <span class="text-cyber-purple font-mono" data-field="skill-react-level">92%</span>
+                            </div>
+                            <div class="relative">
+                                <div class="w-full h-3 bg-white/10 rounded-full overflow-hidden">
+                                    <div class="skill-progress h-full bg-gradient-to-r from-cyber-purple to-electric-blue rounded-full transition-all duration-1000 ease-out" data-width="92"></div>
+                                </div>
+                                <div class="absolute right-0 top-0 w-3 h-3 bg-cyber-purple rounded-full animate-pulse"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item editable relative">
+                            <i class="fas fa-edit edit-icon" onclick="editSkillItem(this)"></i>
+                            <div class="flex justify-between mb-3">
+                                <span class="font-semibold text-white" data-field="skill-tensorflow-name">TensorFlow</span>
+                                <span class="text-cyber-purple font-mono" data-field="skill-tensorflow-level">88%</span>
+                            </div>
+                            <div class="relative">
+                                <div class="w-full h-3 bg-white/10 rounded-full overflow-hidden">
+                                    <div class="skill-progress h-full bg-gradient-to-r from-cyber-purple to-electric-blue rounded-full transition-all duration-1000 ease-out" data-width="88"></div>
+                                </div>
+                                <div class="absolute right-0 top-0 w-3 h-3 bg-cyber-purple rounded-full animate-pulse"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item editable relative">
+                            <i class="fas fa-edit edit-icon" onclick="editSkillItem(this)"></i>
+                            <div class="flex justify-between mb-3">
+                                <span class="font-semibold text-white" data-field="skill-nodejs-name">Node.js</span>
+                                <span class="text-cyber-purple font-mono" data-field="skill-nodejs-level">87%</span>
+                            </div>
+                            <div class="relative">
+                                <div class="w-full h-3 bg-white/10 rounded-full overflow-hidden">
+                                    <div class="skill-progress h-full bg-gradient-to-r from-cyber-purple to-electric-blue rounded-full transition-all duration-1000 ease-out" data-width="87"></div>
+                                </div>
+                                <div class="absolute right-0 top-0 w-3 h-3 bg-cyber-purple rounded-full animate-pulse"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tools & Technologies -->
+                <div class="glass rounded-2xl p-8 hover-lift editable relative" data-aos="fade-up" data-aos-delay="200">
+                    <i class="fas fa-edit edit-icon" onclick="editContent(this)"></i>
+                    <h3 class="font-bold text-2xl text-center mb-8 text-gold" data-field="tools-technologies-title">Tools & Technologies</h3>
+                    <div class="space-y-6">
+                        <div class="skill-item editable relative">
+                            <i class="fas fa-edit edit-icon" onclick="editSkillItem(this)"></i>
+                            <div class="flex justify-between mb-3">
+                                <span class="font-semibold text-white" data-field="skill-aws-name">AWS</span>
+                                <span class="text-gold font-mono" data-field="skill-aws-level">90%</span>
+                            </div>
+                            <div class="relative">
+                                <div class="w-full h-3 bg-white/10 rounded-full overflow-hidden">
+                                    <div class="skill-progress h-full bg-gradient-to-r from-gold to-electric-blue rounded-full transition-all duration-1000 ease-out" data-width="90"></div>
+                                </div>
+                                <div class="absolute right-0 top-0 w-3 h-3 bg-gold rounded-full animate-pulse"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item editable relative">
+                            <i class="fas fa-edit edit-icon" onclick="editSkillItem(this)"></i>
+                            <div class="flex justify-between mb-3">
+                                <span class="font-semibold text-white" data-field="skill-docker-name">Docker</span>
+                                <span class="text-gold font-mono" data-field="skill-docker-level">85%</span>
+                            </div>
+                            <div class="relative">
+                                <div class="w-full h-3 bg-white/10 rounded-full overflow-hidden">
+                                    <div class="skill-progress h-full bg-gradient-to-r from-gold to-electric-blue rounded-full transition-all duration-1000 ease-out" data-width="85"></div>
+                                </div>
+                                <div class="absolute right-0 top-0 w-3 h-3 bg-gold rounded-full animate-pulse"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item editable relative">
+                            <i class="fas fa-edit edit-icon" onclick="editSkillItem(this)"></i>
+                            <div class="flex justify-between mb-3">
+                                <span class="font-semibold text-white" data-field="skill-git-name">Git</span>
+                                <span class="text-gold font-mono" data-field="skill-git-level">93%</span>
+                            </div>
+                            <div class="relative">
+                                <div class="w-full h-3 bg-white/10 rounded-full overflow-hidden">
+                                    <div class="skill-progress h-full bg-gradient-to-r from-gold to-electric-blue rounded-full transition-all duration-1000 ease-out" data-width="93"></div>
+                                </div>
+                                <div class="absolute right-0 top-0 w-3 h-3 bg-gold rounded-full animate-pulse"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-32 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-20 editable relative" data-aos="fade-up">
+                <i class="fas fa-edit edit-icon" onclick="editContent(this)"></i>
+                <h2 class="font-inter font-black text-5xl lg:text-6xl mb-6 bg-gradient-to-r from-electric-blue via-accent-teal to-gold bg-clip-text text-transparent" data-field="contact-title">
+                    Let's Connect
+                </h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-electric-blue via-accent-teal to-gold mx-auto rounded-full"></div>
+                <p class="text-xl text-white/70 mt-8 max-w-2xl mx-auto" data-field="contact-description">
+                    Ready to bring your next project to life? Let's discuss how we can work together.
+                </p>
+            </div>
+
+            <div class="max-w-3xl mx-auto">
+                <div class="space-y-6" data-aos="fade-up">
+                    <div class="glass rounded-2xl p-6 hover-lift">
+                        <div class="flex items-center space-x-6">
+                            <div class="w-16 h-16 bg-gradient-to-r from-electric-blue to-cyber-purple rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-envelope text-white text-xl"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="editable relative">
+                                    <i class="fas fa-edit edit-icon" onclick="editContent(this)"></i>
+                                    <h3 class="font-bold text-xl text-white mb-2" data-field="email-label">Email</h3>
+                                </div>
+                                <div class="editable relative">
+                                    <i class="fas fa-edit edit-icon" onclick="editContent(this)"></i>
+                                    <p class="text-white/70 text-lg break-all" data-field="email-address">alex@example.com</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass rounded-2xl p-6 hover-lift">
+                        <div class="flex items-center space-x-6">
+                            <div class="w-16 h-16 bg-gradient-to-r from-accent-pink to-cyber-purple rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-phone text-white text-xl"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="editable relative">
+                                    <i class="fas fa-edit edit-icon" onclick="editContent(this)"></i>
+                                    <h3 class="font-bold text-xl text-white mb-2" data-field="phone-label">Phone</h3>
+                                </div>
+                                <div class="editable relative">
+                                    <i class="fas fa-edit edit-icon" onclick="editContent(this)"></i>
+                                    <p class="text-white/70 text-lg" data-field="phone-number">+1 (234) 567-8900</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass rounded-2xl p-6 hover-lift">
+                        <div class="flex items-center space-x-6">
+                            <div class="w-16 h-16 bg-gradient-to-r from-accent-teal to-neon-green rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-map-marker-alt text-white text-xl"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="editable relative">
+                                    <i class="fas fa-edit edit-icon" onclick="editContent(this)"></i>
+                                    <h3 class="font-bold text-xl text-white mb-2" data-field="location-label">Location</h3>
+                                </div>
+                                <div class="editable relative">
+                                    <i class="fas fa-edit edit-icon" onclick="editContent(this)"></i>
+                                    <p class="text-white/70 text-lg" data-field="location-address">San Francisco, CA</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-16 border-t border-white/10">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center">
+                <div class="font-mono font-bold text-3xl bg-gradient-to-r from-electric-blue to-cyber-purple bg-clip-text text-transparent mb-8">
+                    &lt;AJ/&gt;
+                </div>
+                <div class="flex justify-center gap-6 mb-8">
+                    <a href="#" class="w-12 h-12 glass rounded-full flex items-center justify-center text-white hover:text-electric-blue hover:scale-110 transition-all">
+                        <i class="fab fa-linkedin text-xl"></i>
+                    </a>
+                    <a href="#" class="w-12 h-12 glass rounded-full flex items-center justify-center text-white hover:text-electric-blue hover:scale-110 transition-all">
+                        <i class="fab fa-github text-xl"></i>
+                    </a>
+                    <a href="#" class="w-12 h-12 glass rounded-full flex items-center justify-center text-white hover:text-electric-blue hover:scale-110 transition-all">
+                        <i class="fab fa-twitter text-xl"></i>
+                    </a>
+                    <a href="#" class="w-12 h-12 glass rounded-full flex items-center justify-center text-white hover:text-electric-blue hover:scale-110 transition-all">
+                        <i class="fab fa-kaggle text-xl"></i>
+                    </a>
+                </div>
+                <p class="text-white/50">&copy; 2024 Alex Johnson. Crafted with passion and precision.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Logo Customization Modal -->
+    <div id="logoModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+        <div class="glass rounded-2xl p-8 max-w-2xl w-full">
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="font-bold text-3xl bg-gradient-to-r from-accent-pink to-cyber-purple bg-clip-text text-transparent">
+                    Customize Logo & Branding
+                </h2>
+                <button onclick="closeLogoModal()" class="w-10 h-10 glass rounded-full flex items-center justify-center text-white hover:text-electric-blue transition-colors">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="space-y-8">
+                <!-- Logo Preview -->
+                <div class="text-center">
+                    <h3 class="font-semibold text-white mb-4">Logo Preview</h3>
+                    <div class="flex justify-center space-x-8">
+                        <div class="text-center">
+                            <p class="text-sm text-white/70 mb-2">Navbar Logo</p>
+                            <div id="navbarLogoPreview" class="font-mono font-bold text-2xl bg-gradient-to-r from-electric-blue to-cyber-purple bg-clip-text text-transparent">
+                                &lt;AJ/&gt;
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-sm text-white/70 mb-2">Loading Animation</p>
+                            <div id="loadingLogoPreview" class="font-bold text-3xl bg-gradient-to-r from-electric-blue to-cyber-purple bg-clip-text text-transparent">
+                                AJ
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Name Input -->
+                <div>
+                    <label class="block text-white font-semibold mb-3">Full Name</label>
+                    <input type="text" id="fullNameInput" placeholder="Enter your full name (e.g., Alex Johnson)" 
+                           class="w-full bg-white/5 border border-white/20 rounded-xl px-6 py-4 text-white placeholder-white/50 focus:border-accent-pink focus:outline-none transition-colors">
+                    <p class="text-sm text-white/60 mt-2">Logo will use the first letter of each word</p>
+                </div>
+
+                <!-- Logo Style Options -->
+                <div>
+                    <label class="block text-white font-semibold mb-3">Logo Style</label>
+                    <div class="grid grid-cols-2 gap-4">
+                        <button onclick="selectLogoStyle('brackets')" class="logo-style-btn p-4 glass rounded-xl border border-white/20 hover:border-accent-pink transition-colors" data-style="brackets">
+                            <div class="font-mono font-bold text-xl text-center">&lt;AJ/&gt;</div>
+                            <p class="text-sm text-white/70 mt-2">Code Brackets</p>
+                        </button>
+                        <button onclick="selectLogoStyle('minimal')" class="logo-style-btn p-4 glass rounded-xl border border-white/20 hover:border-accent-pink transition-colors" data-style="minimal">
+                            <div class="font-bold text-xl text-center">AJ</div>
+                            <p class="text-sm text-white/70 mt-2">Minimal</p>
+                        </button>
+                        <button onclick="selectLogoStyle('circle')" class="logo-style-btn p-4 glass rounded-xl border border-white/20 hover:border-accent-pink transition-colors" data-style="circle">
+                            <div class="w-12 h-12 bg-gradient-to-r from-electric-blue to-cyber-purple rounded-full flex items-center justify-center font-bold text-white mx-auto">AJ</div>
+                            <p class="text-sm text-white/70 mt-2">Circle Badge</p>
+                        </button>
+                        <button onclick="selectLogoStyle('square')" class="logo-style-btn p-4 glass rounded-xl border border-white/20 hover:border-accent-pink transition-colors" data-style="square">
+                            <div class="w-12 h-12 bg-gradient-to-r from-electric-blue to-cyber-purple rounded-lg flex items-center justify-center font-bold text-white mx-auto">AJ</div>
+                            <p class="text-sm text-white/70 mt-2">Square Badge</p>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Color Scheme -->
+                <div>
+                    <label class="block text-white font-semibold mb-3">Color Scheme</label>
+                    <div class="grid grid-cols-3 gap-3">
+                        <button onclick="selectColorScheme('blue-purple')" class="color-scheme-btn p-3 rounded-xl border-2 border-transparent hover:border-white/30 transition-colors" data-scheme="blue-purple">
+                            <div class="w-full h-8 bg-gradient-to-r from-electric-blue to-cyber-purple rounded-lg mb-2"></div>
+                            <p class="text-xs text-white/70">Blue Purple</p>
+                        </button>
+                        <button onclick="selectColorScheme('gold-orange')" class="color-scheme-btn p-3 rounded-xl border-2 border-transparent hover:border-white/30 transition-colors" data-scheme="gold-orange">
+                            <div class="w-full h-8 bg-gradient-to-r from-gold to-orange-500 rounded-lg mb-2"></div>
+                            <p class="text-xs text-white/70">Gold Orange</p>
+                        </button>
+                        <button onclick="selectColorScheme('green-teal')" class="color-scheme-btn p-3 rounded-xl border-2 border-transparent hover:border-white/30 transition-colors" data-scheme="green-teal">
+                            <div class="w-full h-8 bg-gradient-to-r from-neon-green to-accent-teal rounded-lg mb-2"></div>
+                            <p class="text-xs text-white/70">Green Teal</p>
+                        </button>
+                        <button onclick="selectColorScheme('pink-purple')" class="color-scheme-btn p-3 rounded-xl border-2 border-transparent hover:border-white/30 transition-colors" data-scheme="pink-purple">
+                            <div class="w-full h-8 bg-gradient-to-r from-accent-pink to-cyber-purple rounded-lg mb-2"></div>
+                            <p class="text-xs text-white/70">Pink Purple</p>
+                        </button>
+                        <button onclick="selectColorScheme('red-orange')" class="color-scheme-btn p-3 rounded-xl border-2 border-transparent hover:border-white/30 transition-colors" data-scheme="red-orange">
+                            <div class="w-full h-8 bg-gradient-to-r from-red-500 to-orange-500 rounded-lg mb-2"></div>
+                            <p class="text-xs text-white/70">Red Orange</p>
+                        </button>
+                        <button onclick="selectColorScheme('mono')" class="color-scheme-btn p-3 rounded-xl border-2 border-transparent hover:border-white/30 transition-colors" data-scheme="mono">
+                            <div class="w-full h-8 bg-gradient-to-r from-gray-400 to-gray-600 rounded-lg mb-2"></div>
+                            <p class="text-xs text-white/70">Monochrome</p>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex gap-4 pt-4">
+                    <button onclick="applyLogoChanges()" class="flex-1 bg-gradient-to-r from-accent-pink to-cyber-purple rounded-xl py-4 font-semibold text-white hover:scale-105 transition-transform">
+                        Apply Changes
+                    </button>
+                    <button onclick="resetToDefault()" class="px-6 py-4 glass rounded-xl font-semibold text-white border border-white/20 hover:border-white/40 transition-colors">
+                        Reset to Default
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Resume Upload Modal -->
+    <div id="resumeModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+        <div class="glass rounded-2xl p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="font-bold text-3xl bg-gradient-to-r from-electric-blue to-cyber-purple bg-clip-text text-transparent">
+                    Upload Resume
+                </h2>
+                <button onclick="closeResumeModal()" class="w-10 h-10 glass rounded-full flex items-center justify-center text-white hover:text-electric-blue transition-colors">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="mb-8">
+                <div class="border-2 border-dashed border-electric-blue/30 rounded-2xl p-12 text-center hover:border-electric-blue/50 transition-colors">
+                    <i class="fas fa-cloud-upload-alt text-6xl text-electric-blue mb-6"></i>
+                    <p class="text-xl text-white mb-4">Upload your resume for download</p>
+                    <input type="file" id="resumeFile" accept=".pdf,.doc,.docx" class="hidden" onchange="handleResumeUpload(event)">
+                    <button onclick="document.getElementById('resumeFile').click()" class="bg-gradient-to-r from-electric-blue to-cyber-purple rounded-xl px-8 py-3 font-semibold text-white hover:scale-105 transition-transform">
+                        Choose File
+                    </button>
+                    <p class="text-sm text-white/50 mt-4">Supported formats: PDF, DOC, DOCX (Max 10MB)</p>
+                    <p class="text-sm text-white/70 mt-2">Your resume will be stored locally and available for download</p>
+                </div>
+            </div>
+            
+            <div id="resumeStatus" class="hidden">
+                <div class="glass rounded-xl p-6 mb-6">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-gradient-to-r from-neon-green to-electric-blue rounded-full flex items-center justify-center">
+                                <i class="fas fa-file-pdf text-white"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-white" id="resumeFileName">Resume.pdf</h4>
+                                <p class="text-sm text-white/70" id="resumeFileInfo">Uploaded on Date</p>
+                            </div>
+                        </div>
+                        <button onclick="removeResume()" class="text-red-400 hover:text-red-300 transition-colors">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="flex gap-4">
+                    <button onclick="downloadResume()" class="bg-gradient-to-r from-electric-blue to-cyber-purple rounded-xl px-8 py-3 font-semibold text-white hover:scale-105 transition-transform">
+                        <i class="fas fa-download mr-2"></i>Test Download
+                    </button>
+                    <button onclick="closeResumeModal()" class="glass rounded-xl px-8 py-3 font-semibold text-white border border-white/20 hover:border-white/40 transition-colors">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let isEditMode = false;
+        let clickCount = 0;
+        let clickTimer = null;
+        let portfolioData = {};
+        let currentTheme = 'dark';
+        let logoSettings = {
+            initials: 'AJ',
+            style: 'brackets',
+            colorScheme: 'blue-purple'
+        };
+
+        // Initialize everything when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            initializePortfolio();
+        });
+
+        function initializePortfolio() {
+            // Hide loading screen
+            setTimeout(() => {
+                document.getElementById('loadingScreen').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('loadingScreen').style.display = 'none';
+                }, 500);
+            }, 2000);
+
+            // Initialize all components
+            loadPortfolioData();
+            loadLogoSettings();
+            checkResumeStatus();
+            initializeParticles();
+            initializeCursor();
+            initializeAnimations();
+            initializeSkillBars();
+            initializeThemeToggle();
+            initializeNavigation();
+            
+            // Add sound effects (optional)
+            addSoundEffects();
+        }
+
+        // Particle System
+        function initializeParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
+
+            for (let i = 0; i < particleCount; i++) {
+                createParticle(particlesContainer);
+            }
+
+            // Create new particles periodically
+            setInterval(() => {
+                if (particlesContainer.children.length < particleCount) {
+                    createParticle(particlesContainer);
+                }
+            }, 2000);
+        }
+
+        function createParticle(container) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            particle.style.animationDelay = Math.random() * 5 + 's';
+            
+            // Random colors
+            const colors = ['#00E5FF', '#7C3AED', '#F59E0B', '#10B981', '#EC4899', '#06B6D4'];
+            particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+            
+            container.appendChild(particle);
+
+            // Remove particle after animation
+            setTimeout(() => {
+                if (particle.parentNode) {
+                    particle.parentNode.removeChild(particle);
+                }
+            }, 25000);
+        }
+
+        // Custom Cursor
+        function initializeCursor() {
+            const cursor = document.querySelector('.cursor');
+            const follower = document.querySelector('.cursor-follower');
+
+            if (window.innerWidth > 768) {
+                document.addEventListener('mousemove', (e) => {
+                    cursor.style.left = e.clientX + 'px';
+                    cursor.style.top = e.clientY + 'px';
+                    
+                    setTimeout(() => {
+                        follower.style.left = e.clientX - 20 + 'px';
+                        follower.style.top = e.clientY - 20 + 'px';
+                    }, 100);
+                });
+
+                // Cursor interactions
+                document.querySelectorAll('a, button, .hover-lift').forEach(el => {
+                    el.addEventListener('mouseenter', () => {
+                        cursor.style.transform = 'scale(1.5)';
+                        follower.style.transform = 'scale(1.5)';
+                    });
+                    el.addEventListener('mouseleave', () => {
+                        cursor.style.transform = 'scale(1)';
+                        follower.style.transform = 'scale(1)';
+                    });
+                });
+            }
+        }
+
+        // AOS Animations
+        function initializeAnimations() {
+            AOS.init({
+                duration: 1000,
+                easing: 'ease-out-cubic',
+                once: true,
+                offset: 100
+            });
+        }
+
+        // Skill Bars Animation
+        function initializeSkillBars() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const skillBars = entry.target.querySelectorAll('.skill-progress');
+                        skillBars.forEach((bar, index) => {
+                            setTimeout(() => {
+                                const width = bar.getAttribute('data-width');
+                                bar.style.width = width + '%';
+                            }, index * 200);
+                        });
+                    }
+                });
+            });
+
+            document.querySelectorAll('.skill-item').forEach(item => {
+                observer.observe(item.closest('section'));
+            });
+        }
+
+        // Theme Toggle
+        function initializeThemeToggle() {
+            const themeToggle = document.getElementById('themeToggle');
+            
+            themeToggle.addEventListener('click', () => {
+                currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', currentTheme);
+                
+                const icon = themeToggle.querySelector('i');
+                icon.className = currentTheme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+                
+                // Save theme preference
+                localStorage.setItem('theme', currentTheme);
+            });
+
+            // Load saved theme
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                currentTheme = savedTheme;
+                document.documentElement.setAttribute('data-theme', currentTheme);
+                const icon = themeToggle.querySelector('i');
+                icon.className = currentTheme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+            }
+        }
+
+        // Navigation
+        function initializeNavigation() {
+            const navbar = document.getElementById('navbar');
+            
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 100) {
+                    navbar.style.background = 'rgba(15, 20, 25, 0.95)';
+                } else {
+                    navbar.style.background = 'rgba(255, 255, 255, 0.1)';
+                }
+            });
+
+            // Smooth scroll for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        }
+
+        // Sound Effects (Optional)
+        function addSoundEffects() {
+            // Create audio context for subtle UI sounds
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            
+            function playTone(frequency, duration) {
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.frequency.value = frequency;
+                oscillator.type = 'sine';
+                
+                gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
+                
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + duration);
+            }
+
+            // Add sound to buttons
+            document.querySelectorAll('button, .hover-lift').forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    playTone(800, 0.1);
+                });
+                el.addEventListener('click', () => {
+                    playTone(1000, 0.2);
+                });
+            });
+        }
+
+        // Portfolio Data Management
+        function loadPortfolioData() {
+            const saved = localStorage.getItem('portfolioData');
+            if (saved) {
+                try {
+                    portfolioData = JSON.parse(saved);
+                    populatePortfolio();
+                    console.log('✅ Portfolio data loaded from localStorage');
+                } catch (error) {
+                    console.error('Error loading portfolio data:', error);
+                    portfolioData = {};
+                }
+            } else {
+                // Initialize with current page content
+                initializePortfolioData();
+            }
+        }
+
+        function initializePortfolioData() {
+            // Capture all current content as initial data
+            document.querySelectorAll('[data-field]').forEach(element => {
+                const field = element.getAttribute('data-field');
+                const content = element.textContent.trim();
+                if (content && !portfolioData[field]) {
+                    portfolioData[field] = content;
+                }
+            });
+            savePortfolioData();
+            console.log('📝 Initial portfolio data captured and saved');
+        }
+
+        function savePortfolioData() {
+            try {
+                localStorage.setItem('portfolioData', JSON.stringify(portfolioData));
+                localStorage.setItem('portfolioDataBackup', JSON.stringify({
+                    data: portfolioData,
+                    timestamp: new Date().toISOString(),
+                    version: '1.0'
+                }));
+                console.log('💾 Portfolio data saved successfully');
+            } catch (error) {
+                console.error('Error saving portfolio data:', error);
+                showNotification('❌ Failed to save changes', 'error');
+            }
+        }
+
+        function populatePortfolio() {
+            Object.keys(portfolioData).forEach(key => {
+                const element = document.querySelector(`[data-field="${key}"]`);
+                if (element && portfolioData[key]) {
+                    // Preserve HTML structure while updating text content
+                    if (element.children.length === 0) {
+                        element.textContent = portfolioData[key];
+                    } else {
+                        // For elements with child elements, update text nodes only
+                        const walker = document.createTreeWalker(
+                            element,
+                            NodeFilter.SHOW_TEXT,
+                            null,
+                            false
+                        );
+                        let textNode = walker.nextNode();
+                        if (textNode) {
+                            textNode.textContent = portfolioData[key];
+                        }
+                    }
+                }
+            });
+        }
+
+        function updatePortfolioData(field, value) {
+            portfolioData[field] = value;
+            savePortfolioData();
+            
+            // Show save confirmation
+            showSaveConfirmation();
+        }
+
+        function showSaveConfirmation() {
+            // Create a subtle save indicator
+            const indicator = document.createElement('div');
+            indicator.className = 'fixed top-4 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-neon-green to-electric-blue text-white px-4 py-2 rounded-full text-sm font-medium z-50 transition-all duration-300 opacity-0';
+            indicator.innerHTML = '💾 Changes saved automatically';
+            
+            document.body.appendChild(indicator);
+            
+            // Animate in
+            setTimeout(() => {
+                indicator.style.opacity = '1';
+                indicator.style.transform = 'translate(-50%, 0)';
+            }, 100);
+            
+            // Animate out
+            setTimeout(() => {
+                indicator.style.opacity = '0';
+                indicator.style.transform = 'translate(-50%, -20px)';
+                setTimeout(() => indicator.remove(), 300);
+            }, 2000);
+        }
+
+        function exportPortfolioData() {
+            const dataToExport = {
+                portfolioData: portfolioData,
+                timestamp: new Date().toISOString(),
+                version: '1.0'
+            };
+            
+            const blob = new Blob([JSON.stringify(dataToExport, null, 2)], {
+                type: 'application/json'
+            });
+            
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `portfolio-backup-${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            
+            URL.revokeObjectURL(url);
+            showNotification('📁 Portfolio data exported successfully!', 'success');
+        }
+
+        function importPortfolioData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const imported = JSON.parse(e.target.result);
+                    
+                    if (imported.portfolioData) {
+                        portfolioData = imported.portfolioData;
+                        savePortfolioData();
+                        populatePortfolio();
+                        showNotification('📥 Portfolio data imported successfully!', 'success');
+                    } else {
+                        showNotification('❌ Invalid backup file format', 'error');
+                    }
+                } catch (error) {
+                    console.error('Import error:', error);
+                    showNotification('❌ Failed to import data', 'error');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        // Edit Mode Functions
+        function handleNameClick(event) {
+            clickCount++;
+            
+            if (clickCount === 1) {
+                clickTimer = setTimeout(() => {
+                    clickCount = 0;
+                }, 600);
+            } else if (clickCount === 3) {
+                clearTimeout(clickTimer);
+                clickCount = 0;
+                toggleEditMode();
+            }
+        }
+
+        function toggleEditMode() {
+            isEditMode = !isEditMode;
+            document.body.classList.toggle('edit-mode', isEditMode);
+            
+            // Show/hide edit-specific buttons
+            document.getElementById('uploadResumeBtn').style.display = isEditMode ? 'inline-block' : 'none';
+            document.getElementById('exportDataBtn').style.display = isEditMode ? 'inline-block' : 'none';
+            document.getElementById('importDataBtn').style.display = isEditMode ? 'inline-block' : 'none';
+            document.getElementById('customizeLogoBtn').style.display = isEditMode ? 'inline-block' : 'none';
+            document.getElementById('addExperienceBtn').style.display = isEditMode ? 'inline-block' : 'none';
+            document.getElementById('addProjectBtn').style.display = isEditMode ? 'inline-block' : 'none';
+            document.getElementById('addSocialBtn').style.display = isEditMode ? 'inline-block' : 'none';
+            document.getElementById('addStatBtn').style.display = isEditMode ? 'inline-block' : 'none';
+            
+            // Show/hide delete buttons
+            document.querySelectorAll('.delete-experience-btn, .delete-project-btn, .delete-stat-btn').forEach(btn => {
+                btn.style.display = isEditMode ? 'block' : 'none';
+            });
+            
+            if (isEditMode) {
+                showNotification('🎨 Edit mode activated! Click edit icons to modify content.', 'success');
+            } else {
+                showNotification('💾 Edit mode deactivated. Changes saved.', 'info');
+                savePortfolioData();
+            }
+        }
+
+        function editContent(icon) {
+            const element = icon.parentElement;
+            const field = element.querySelector('[data-field]');
+            
+            if (!field) {
+                console.error('No data-field found');
+                return;
+            }
+            
+            const fieldName = field.getAttribute('data-field');
+            const currentValue = field.textContent.trim();
+            
+            // Prevent multiple edits on same element
+            if (field.querySelector('input, textarea')) {
+                return;
+            }
+            
+            // Hide the edit icon during editing
+            icon.style.display = 'none';
+            
+            // Determine if we need multiline input
+            const isMultiline = currentValue.length > 100 || 
+                               fieldName.includes('description') || 
+                               fieldName.includes('achievements') ||
+                               currentValue.includes('\n') ||
+                               currentValue.includes('•');
+            
+            let editElement;
+            
+            if (isMultiline) {
+                // Create textarea for longer content
+                editElement = document.createElement('textarea');
+                editElement.value = currentValue;
+                editElement.rows = Math.max(3, Math.min(8, currentValue.split('\n').length + 1));
+                editElement.className = 'w-full bg-slate-800 border-2 border-blue-400 rounded-lg px-4 py-3 text-white resize-none focus:outline-none focus:border-purple-400 focus:ring-2 focus:ring-blue-400/50';
+            } else {
+                // Create input for shorter content
+                editElement = document.createElement('input');
+                editElement.type = 'text';
+                editElement.value = currentValue;
+                editElement.className = 'w-full bg-slate-800 border-2 border-blue-400 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-purple-400 focus:ring-2 focus:ring-blue-400/50';
+            }
+            
+            // Apply consistent styling
+            editElement.style.fontFamily = getComputedStyle(field).fontFamily;
+            editElement.style.fontSize = getComputedStyle(field).fontSize;
+            editElement.style.fontWeight = getComputedStyle(field).fontWeight;
+            editElement.style.color = 'white';
+            editElement.style.background = 'rgba(30, 41, 59, 0.9)';
+            editElement.style.minWidth = '200px';
+            
+            // Store original content and replace with input
+            const originalHTML = field.innerHTML;
+            field.innerHTML = '';
+            field.appendChild(editElement);
+            
+            // Focus and select
+            editElement.focus();
+            editElement.select();
+            
+            let isEditing = true;
+            
+            function saveEdit() {
+                if (!isEditing) return;
+                isEditing = false;
+                
+                const newValue = editElement.value.trim();
+                
+                if (newValue && newValue !== currentValue) {
+                    field.textContent = newValue;
+                    updatePortfolioData(fieldName, newValue);
+                    showNotification(`✅ Updated ${fieldName.replace('-', ' ')}!`, 'success');
+                } else {
+                    field.innerHTML = originalHTML;
+                }
+                
+                // Show edit icon again
+                icon.style.display = 'flex';
+            }
+            
+            function cancelEdit() {
+                if (!isEditing) return;
+                isEditing = false;
+                
+                field.innerHTML = originalHTML;
+                icon.style.display = 'flex';
+            }
+            
+            // Event listeners
+            editElement.addEventListener('keydown', (e) => {
+                e.stopPropagation();
+                
+                if (e.key === 'Enter') {
+                    if (isMultiline && !e.ctrlKey) {
+                        return; // Allow normal Enter in textarea
+                    }
+                    e.preventDefault();
+                    saveEdit();
+                } else if (e.key === 'Escape') {
+                    e.preventDefault();
+                    cancelEdit();
+                }
+            });
+            
+            editElement.addEventListener('blur', (e) => {
+                // Small delay to allow for other interactions
+                setTimeout(() => {
+                    if (isEditing) {
+                        saveEdit();
+                    }
+                }, 150);
+            });
+            
+            // Prevent clicks from bubbling up
+            editElement.addEventListener('click', (e) => {
+                e.stopPropagation();
+            });
+        }
+
+        function updatePortfolioData(field, value) {
+            portfolioData[field] = value;
+            savePortfolioData();
+        }
+
+        // Notification System
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            const colors = {
+                success: 'from-neon-green to-electric-blue',
+                error: 'from-red-500 to-red-600',
+                info: 'from-electric-blue to-cyber-purple'
+            };
+            
+            notification.className = `fixed top-24 right-6 bg-gradient-to-r ${colors[type]} text-white px-6 py-4 rounded-xl shadow-lg z-50 transform translate-x-full transition-transform duration-300 max-w-sm`;
+            notification.innerHTML = `
+                <div class="flex items-center space-x-3">
+                    <span>${message}</span>
+                    <button onclick="this.parentElement.parentElement.remove()" class="text-white/80 hover:text-white">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Animate in
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+            
+            // Auto remove
+            setTimeout(() => {
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => notification.remove(), 300);
+            }, 5000);
+        }
+
+        // Resume Upload Functions
+        document.getElementById('uploadResumeBtn').addEventListener('click', function() {
+            document.getElementById('resumeModal').classList.remove('hidden');
+            document.getElementById('resumeModal').classList.add('flex');
+        });
+
+        function closeResumeModal() {
+            document.getElementById('resumeModal').classList.add('hidden');
+            document.getElementById('resumeModal').classList.remove('flex');
+            document.getElementById('resumePreview').classList.add('hidden');
+        }
+
+        async function handleResumeUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            if (file.size > 10 * 1024 * 1024) {
+                showNotification('❌ File size must be less than 10MB', 'error');
+                return;
+            }
+
+            showNotification('📄 Uploading resume...', 'info');
+
+            try {
+                // Convert file to base64 for storage
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const resumeData = {
+                        name: file.name,
+                        type: file.type,
+                        size: file.size,
+                        data: e.target.result,
+                        uploadDate: new Date().toISOString()
+                    };
+                    
+                    // Store resume data
+                    localStorage.setItem('uploadedResume', JSON.stringify(resumeData));
+                    
+                    // Update UI
+                    updateResumeStatus(resumeData);
+                    closeResumeModal();
+                    showNotification('✅ Resume uploaded successfully!', 'success');
+                };
+                reader.readAsDataURL(file);
+                
+            } catch (error) {
+                console.error('Error uploading resume:', error);
+                showNotification('❌ Error uploading resume. Please try again.', 'error');
+            }
+        }
+
+
+
+        function updateResumeStatus(resumeData) {
+            // Show resume status section
+            document.getElementById('resumeStatus').classList.remove('hidden');
+            
+            // Update file info
+            document.getElementById('resumeFileName').textContent = resumeData.name;
+            const uploadDate = new Date(resumeData.uploadDate).toLocaleDateString();
+            const fileSize = (resumeData.size / 1024 / 1024).toFixed(2);
+            document.getElementById('resumeFileInfo').textContent = `Uploaded on ${uploadDate} • ${fileSize} MB`;
+            
+            // Update download button text
+            const downloadText = document.getElementById('downloadResumeText');
+            if (downloadText) {
+                downloadText.textContent = 'Download Resume';
+            }
+            
+            // Update icon based on file type
+            const icon = document.querySelector('#resumeStatus .fas');
+            if (resumeData.type.includes('pdf')) {
+                icon.className = 'fas fa-file-pdf text-white';
+            } else if (resumeData.type.includes('word')) {
+                icon.className = 'fas fa-file-word text-white';
+            } else {
+                icon.className = 'fas fa-file text-white';
+            }
+        }
+
+        function downloadResume() {
+            const resumeData = localStorage.getItem('uploadedResume');
+            
+            if (!resumeData) {
+                showNotification('❌ No resume uploaded yet', 'error');
+                return;
+            }
+            
+            try {
+                const resume = JSON.parse(resumeData);
+                
+                // Create download link
+                const link = document.createElement('a');
+                link.href = resume.data;
+                link.download = resume.name;
+                link.click();
+                
+                showNotification('📥 Resume download started!', 'success');
+            } catch (error) {
+                console.error('Download error:', error);
+                showNotification('❌ Error downloading resume', 'error');
+            }
+        }
+
+        function removeResume() {
+            if (confirm('Are you sure you want to remove the uploaded resume?')) {
+                localStorage.removeItem('uploadedResume');
+                document.getElementById('resumeStatus').classList.add('hidden');
+                
+                // Reset download button text
+                const downloadText = document.getElementById('downloadResumeText');
+                if (downloadText) {
+                    downloadText.textContent = 'Download Resume';
+                }
+                
+                showNotification('🗑️ Resume removed successfully', 'info');
+            }
+        }
+
+        function checkResumeStatus() {
+            const resumeData = localStorage.getItem('uploadedResume');
+            if (resumeData) {
+                try {
+                    const resume = JSON.parse(resumeData);
+                    updateResumeStatus(resume);
+                } catch (error) {
+                    console.error('Error loading resume status:', error);
+                }
+            }
+        }
+
+        // Profile Photo Upload
+        function editProfilePhoto(icon) {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*';
+            input.onchange = function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const imageContainer = document.getElementById('profileImageContainer');
+                        imageContainer.innerHTML = `<img src="${e.target.result}" alt="Profile Photo" class="w-full h-full object-cover rounded-full">`;
+                        
+                        // Save image data
+                        portfolioData.profileImage = e.target.result;
+                        savePortfolioData();
+                        showNotification('📸 Profile photo updated!', 'success');
+                    };
+                    reader.readAsDataURL(file);
+                }
+            };
+            input.click();
+        }
+
+        // Social Links Management
+        function editSocialLinks(icon) {
+            const container = document.getElementById('socialLinksContainer');
+            const socialLinks = container.querySelectorAll('.social-icon');
+            
+            // Create modal for editing social links
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4';
+            modal.innerHTML = `
+                <div class="glass rounded-2xl p-8 max-w-2xl w-full">
+                    <div class="flex justify-between items-center mb-8">
+                        <h2 class="font-bold text-3xl bg-gradient-to-r from-electric-blue to-cyber-purple bg-clip-text text-transparent">
+                            Edit Social Links
+                        </h2>
+                        <button onclick="this.closest('.fixed').remove()" class="w-10 h-10 glass rounded-full flex items-center justify-center text-white hover:text-electric-blue transition-colors">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div id="socialLinksEditor" class="space-y-4">
+                        ${Array.from(socialLinks).map((link, index) => `
+                            <div class="flex gap-4 items-center">
+                                <select class="bg-white/5 border border-white/20 rounded-xl px-4 py-3 text-white" onchange="updateSocialIcon(this, ${index})">
+                                    <option value="linkedin" ${link.dataset.platform === 'linkedin' ? 'selected' : ''}>LinkedIn</option>
+                                    <option value="github" ${link.dataset.platform === 'github' ? 'selected' : ''}>GitHub</option>
+                                    <option value="twitter" ${link.dataset.platform === 'twitter' ? 'selected' : ''}>Twitter</option>
+                                    <option value="instagram" ${link.dataset.platform === 'instagram' ? 'selected' : ''}>Instagram</option>
+                                    <option value="facebook" ${link.dataset.platform === 'facebook' ? 'selected' : ''}>Facebook</option>
+                                    <option value="youtube" ${link.dataset.platform === 'youtube' ? 'selected' : ''}>YouTube</option>
+                                    <option value="kaggle" ${link.dataset.platform === 'kaggle' ? 'selected' : ''}>Kaggle</option>
+                                    <option value="dribbble" ${link.dataset.platform === 'dribbble' ? 'selected' : ''}>Dribbble</option>
+                                    <option value="behance" ${link.dataset.platform === 'behance' ? 'selected' : ''}>Behance</option>
+                                </select>
+                                <input type="url" placeholder="https://..." value="${link.dataset.url}" 
+                                       class="flex-1 bg-white/5 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/50"
+                                       onchange="updateSocialUrl(this, ${index})">
+                                <button onclick="removeSocialLink(${index})" class="text-red-400 hover:text-red-300 p-2">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="flex gap-4 mt-8">
+                        <button onclick="saveSocialLinks()" class="bg-gradient-to-r from-electric-blue to-cyber-purple rounded-xl px-8 py-3 font-semibold text-white hover:scale-105 transition-transform">
+                            Save Changes
+                        </button>
+                        <button onclick="this.closest('.fixed').remove()" class="glass rounded-xl px-8 py-3 font-semibold text-white border border-white/20 hover:border-white/40 transition-colors">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+
+        function addSocialLink() {
+            const container = document.getElementById('socialLinksContainer');
+            const newLink = document.createElement('a');
+            newLink.className = 'social-icon w-12 h-12 glass rounded-full flex items-center justify-center text-white hover:text-electric-blue hover:scale-110 transition-all';
+            newLink.setAttribute('data-platform', 'linkedin');
+            newLink.setAttribute('data-url', '#');
+            newLink.href = '#';
+            newLink.innerHTML = '<i class="fab fa-linkedin text-xl"></i>';
+            
+            container.appendChild(newLink);
+            showNotification('➕ Social link added!', 'success');
+        }
+
+        // Stats Management
+        function editStatsCards(icon) {
+            // Enable inline editing for stats
+            showNotification('📊 Click on any stat to edit it directly!', 'info');
+        }
+
+        function addStat() {
+            const container = document.getElementById('statsContainer');
+            const colors = ['electric-blue', 'cyber-purple', 'gold', 'neon-green', 'accent-pink', 'accent-teal'];
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            
+            const newStat = document.createElement('div');
+            newStat.className = 'flex items-center justify-between stat-item';
+            newStat.setAttribute('data-label', 'New Stat');
+            newStat.setAttribute('data-value', '0');
+            newStat.setAttribute('data-color', randomColor);
+            newStat.innerHTML = `
+                <span class="text-white/80 editable" data-field="stat-label" onclick="editStatInline(this)">New Stat</span>
+                <span class="text-2xl font-bold text-${randomColor} editable" data-field="stat-value" onclick="editStatInline(this)">0</span>
+                <button class="delete-stat-btn ml-4 text-red-400 hover:text-red-300" onclick="deleteStat(this)" style="display: ${isEditMode ? 'block' : 'none'}">
+                    <i class="fas fa-trash text-sm"></i>
+                </button>
+            `;
+            
+            container.appendChild(newStat);
+            showNotification('📊 New stat added!', 'success');
+        }
+
+        function deleteStat(button) {
+            if (confirm('Are you sure you want to delete this stat?')) {
+                button.closest('.stat-item').remove();
+                showNotification('🗑️ Stat deleted!', 'info');
+            }
+        }
+
+        function editStatInline(element) {
+            const currentValue = element.textContent.trim();
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.value = currentValue;
+            input.className = 'bg-slate-800 border-2 border-blue-400 rounded px-2 py-1 text-white text-sm';
+            
+            element.innerHTML = '';
+            element.appendChild(input);
+            input.focus();
+            input.select();
+            
+            function saveEdit() {
+                const newValue = input.value.trim();
+                if (newValue) {
+                    element.textContent = newValue;
+                    const statItem = element.closest('.stat-item');
+                    if (element.dataset.field === 'stat-label') {
+                        statItem.setAttribute('data-label', newValue);
+                    } else {
+                        statItem.setAttribute('data-value', newValue);
+                    }
+                    showNotification('✅ Stat updated!', 'success');
+                } else {
+                    element.textContent = currentValue;
+                }
+            }
+            
+            input.addEventListener('blur', saveEdit);
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    saveEdit();
+                } else if (e.key === 'Escape') {
+                    element.textContent = currentValue;
+                }
+            });
+        }
+
+        // Experience Management
+        function addExperience() {
+            const container = document.getElementById('experienceContainer');
+            const newExperience = document.createElement('div');
+            newExperience.className = 'timeline-item glass rounded-2xl p-8 ml-20 hover-lift editable relative';
+            newExperience.innerHTML = `
+                <i class="fas fa-edit edit-icon" onclick="editExperience(this)"></i>
+                <button class="delete-experience-btn absolute top-4 right-16 text-red-400 hover:text-red-300 z-10" onclick="deleteExperience(this)" style="display: ${isEditMode ? 'block' : 'none'}">
+                    <i class="fas fa-trash"></i>
+                </button>
+                <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-6">
+                    <div>
+                        <h3 class="font-bold text-2xl text-white mb-2" data-field="role">New Position</h3>
+                        <p class="text-electric-blue font-semibold text-lg" data-field="company">Company Name</p>
+                    </div>
+                    <div class="text-cyber-purple font-mono font-semibold" data-field="duration">2024 - Present</div>
+                </div>
+                <div class="space-y-3 text-white/80" data-field="achievements">
+                    <p>• Add your key achievements here</p>
+                    <p>• Click edit to modify this content</p>
+                </div>
+                <div class="flex flex-wrap gap-2 mt-6">
+                    <span class="px-3 py-1 bg-electric-blue/20 text-electric-blue rounded-full text-sm">Skill 1</span>
+                    <span class="px-3 py-1 bg-cyber-purple/20 text-cyber-purple rounded-full text-sm">Skill 2</span>
+                </div>
+            `;
+            
+            container.appendChild(newExperience);
+            showNotification('💼 New experience added!', 'success');
+        }
+
+        function deleteExperience(button) {
+            if (confirm('Are you sure you want to delete this experience?')) {
+                button.closest('.timeline-item').remove();
+                showNotification('🗑️ Experience deleted!', 'info');
+            }
+        }
+
+        // Project Management
+        function addProject() {
+            const container = document.getElementById('projectsContainer');
+            const icons = ['fas fa-code', 'fas fa-mobile-alt', 'fas fa-chart-line', 'fas fa-brain', 'fas fa-database', 'fas fa-cloud'];
+            const gradients = [
+                'from-electric-blue/20 to-cyber-purple/20',
+                'from-cyber-purple/20 to-gold/20',
+                'from-gold/20 to-neon-green/20',
+                'from-neon-green/20 to-accent-teal/20',
+                'from-accent-pink/20 to-cyber-purple/20'
+            ];
+            
+            const randomIcon = icons[Math.floor(Math.random() * icons.length)];
+            const randomGradient = gradients[Math.floor(Math.random() * gradients.length)];
+            
+            const newProject = document.createElement('div');
+            newProject.className = 'group glass rounded-2xl overflow-hidden hover-lift editable relative';
+            newProject.innerHTML = `
+                <i class="fas fa-edit edit-icon" onclick="editProject(this)"></i>
+                <button class="delete-project-btn absolute top-4 right-16 text-red-400 hover:text-red-300 z-10" onclick="deleteProject(this)" style="display: ${isEditMode ? 'block' : 'none'}">
+                    <i class="fas fa-trash"></i>
+                </button>
+                <div class="relative h-64 bg-gradient-to-br ${randomGradient} flex items-center justify-center overflow-hidden">
+                    <div class="text-6xl text-white/30 group-hover:scale-110 transition-transform">
+                        <i class="${randomIcon}"></i>
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                </div>
+                <div class="p-8">
+                    <h3 class="font-bold text-2xl text-white mb-4" data-field="title">New Project</h3>
+                    <p class="text-white/70 mb-6 leading-relaxed" data-field="description">
+                        Describe your amazing project here. Click edit to modify this content.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-6" data-field="technologies">
+                        <span class="px-3 py-1 bg-electric-blue/20 text-electric-blue rounded-full text-sm">Tech 1</span>
+                        <span class="px-3 py-1 bg-cyber-purple/20 text-cyber-purple rounded-full text-sm">Tech 2</span>
+                    </div>
+                    <div class="flex gap-4">
+                        <a href="#" class="text-electric-blue hover:text-white transition-colors">
+                            <i class="fab fa-github text-xl"></i>
+                        </a>
+                        <a href="#" class="text-electric-blue hover:text-white transition-colors">
+                            <i class="fas fa-external-link-alt text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+            `;
+            
+            container.appendChild(newProject);
+            showNotification('🚀 New project added!', 'success');
+        }
+
+        function deleteProject(button) {
+            if (confirm('Are you sure you want to delete this project?')) {
+                button.closest('.group').remove();
+                showNotification('🗑️ Project deleted!', 'info');
+            }
+        }
+
+        // Logo Customization Functions
+        function loadLogoSettings() {
+            const saved = localStorage.getItem('logoSettings');
+            if (saved) {
+                try {
+                    logoSettings = JSON.parse(saved);
+                    applyLogoToPage();
+                    console.log('✅ Logo settings loaded');
+                } catch (error) {
+                    console.error('Error loading logo settings:', error);
+                }
+            } else {
+                // Initialize from current name
+                const nameElement = document.querySelector('[data-field="name"]');
+                if (nameElement) {
+                    const fullName = nameElement.textContent.trim();
+                    logoSettings.initials = generateInitials(fullName);
+                    saveLogoSettings();
+                }
+            }
+        }
+
+        function saveLogoSettings() {
+            try {
+                localStorage.setItem('logoSettings', JSON.stringify(logoSettings));
+                console.log('💾 Logo settings saved');
+            } catch (error) {
+                console.error('Error saving logo settings:', error);
+            }
+        }
+
+        function generateInitials(fullName) {
+            if (!fullName) return 'AJ';
+            
+            const words = fullName.trim().split(/\s+/);
+            if (words.length === 1) {
+                // Single word - take first two letters
+                return words[0].substring(0, 2).toUpperCase();
+            } else {
+                // Multiple words - take first letter of each word (max 3)
+                return words.slice(0, 3).map(word => word.charAt(0).toUpperCase()).join('');
+            }
+        }
+
+        function openLogoCustomizer() {
+            document.getElementById('logoModal').classList.remove('hidden');
+            document.getElementById('logoModal').classList.add('flex');
+            
+            // Populate current settings
+            const nameElement = document.querySelector('[data-field="name"]');
+            if (nameElement) {
+                document.getElementById('fullNameInput').value = nameElement.textContent.trim();
+            }
+            
+            // Update previews
+            updateLogoPreview();
+            
+            // Highlight current selections
+            document.querySelectorAll('.logo-style-btn').forEach(btn => {
+                btn.classList.toggle('border-accent-pink', btn.dataset.style === logoSettings.style);
+            });
+            
+            document.querySelectorAll('.color-scheme-btn').forEach(btn => {
+                btn.classList.toggle('border-white', btn.dataset.scheme === logoSettings.colorScheme);
+            });
+        }
+
+        function closeLogoModal() {
+            document.getElementById('logoModal').classList.add('hidden');
+            document.getElementById('logoModal').classList.remove('flex');
+        }
+
+        function selectLogoStyle(style) {
+            logoSettings.style = style;
+            
+            // Update button states
+            document.querySelectorAll('.logo-style-btn').forEach(btn => {
+                btn.classList.toggle('border-accent-pink', btn.dataset.style === style);
+            });
+            
+            updateLogoPreview();
+        }
+
+        function selectColorScheme(scheme) {
+            logoSettings.colorScheme = scheme;
+            
+            // Update button states
+            document.querySelectorAll('.color-scheme-btn').forEach(btn => {
+                btn.classList.toggle('border-white', btn.dataset.scheme === scheme);
+            });
+            
+            updateLogoPreview();
+        }
+
+        function updateLogoPreview() {
+            const fullName = document.getElementById('fullNameInput').value.trim();
+            const initials = generateInitials(fullName);
+            logoSettings.initials = initials;
+            
+            const navbarPreview = document.getElementById('navbarLogoPreview');
+            const loadingPreview = document.getElementById('loadingLogoPreview');
+            
+            // Get color classes
+            const colorClasses = getColorClasses(logoSettings.colorScheme);
+            
+            // Update navbar preview
+            navbarPreview.className = `font-mono font-bold text-2xl ${colorClasses}`;
+            navbarPreview.textContent = formatLogo(initials, logoSettings.style);
+            
+            // Update loading preview
+            loadingPreview.className = `font-bold text-3xl ${colorClasses}`;
+            loadingPreview.textContent = initials;
+        }
+
+        function formatLogo(initials, style) {
+            switch (style) {
+                case 'brackets':
+                    return `<${initials}/>`;
+                case 'minimal':
+                    return initials;
+                case 'circle':
+                case 'square':
+                    return initials;
+                default:
+                    return `<${initials}/>`;
+            }
+        }
+
+        function getColorClasses(scheme) {
+            const schemes = {
+                'blue-purple': 'bg-gradient-to-r from-electric-blue to-cyber-purple bg-clip-text text-transparent',
+                'gold-orange': 'bg-gradient-to-r from-gold to-orange-500 bg-clip-text text-transparent',
+                'green-teal': 'bg-gradient-to-r from-neon-green to-accent-teal bg-clip-text text-transparent',
+                'pink-purple': 'bg-gradient-to-r from-accent-pink to-cyber-purple bg-clip-text text-transparent',
+                'red-orange': 'bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent',
+                'mono': 'bg-gradient-to-r from-gray-400 to-gray-600 bg-clip-text text-transparent'
+            };
+            return schemes[scheme] || schemes['blue-purple'];
+        }
+
+        function applyLogoChanges() {
+            const fullName = document.getElementById('fullNameInput').value.trim();
+            
+            if (fullName) {
+                // Update the name in portfolio data
+                const nameElement = document.querySelector('[data-field="name"]');
+                if (nameElement) {
+                    nameElement.textContent = fullName;
+                    updatePortfolioData('name', fullName);
+                }
+                
+                logoSettings.initials = generateInitials(fullName);
+            }
+            
+            saveLogoSettings();
+            applyLogoToPage();
+            closeLogoModal();
+            
+            showNotification('🎨 Logo updated successfully!', 'success');
+        }
+
+        function applyLogoToPage() {
+            const navbarLogo = document.querySelector('.font-mono.font-bold.text-2xl');
+            const loadingLogo = document.getElementById('loadingLogo');
+            
+            if (navbarLogo) {
+                navbarLogo.className = `font-mono font-bold text-2xl ${getColorClasses(logoSettings.colorScheme)}`;
+                navbarLogo.textContent = formatLogo(logoSettings.initials, logoSettings.style);
+            }
+            
+            if (loadingLogo) {
+                loadingLogo.className = `loading-logo font-bold text-3xl bg-gradient-to-r from-electric-blue to-cyber-purple bg-clip-text text-transparent animate-pulse-glow`;
+                loadingLogo.textContent = logoSettings.initials;
+            }
+            
+            // Update footer logo
+            const footerLogo = document.querySelector('footer .font-mono.font-bold.text-3xl');
+            if (footerLogo) {
+                footerLogo.className = `font-mono font-bold text-3xl ${getColorClasses(logoSettings.colorScheme)}`;
+                footerLogo.textContent = formatLogo(logoSettings.initials, logoSettings.style);
+            }
+        }
+
+        function resetToDefault() {
+            // Get the current name from the page or use default
+            const nameElement = document.querySelector('[data-field="name"]');
+            const currentName = nameElement ? nameElement.textContent.trim() : 'Alex Johnson';
+            
+            logoSettings = {
+                initials: generateInitials(currentName),
+                style: 'brackets',
+                colorScheme: 'blue-purple'
+            };
+            
+            document.getElementById('fullNameInput').value = currentName;
+            updateLogoPreview();
+            
+            // Reset button states
+            document.querySelectorAll('.logo-style-btn').forEach(btn => {
+                btn.classList.toggle('border-accent-pink', btn.dataset.style === 'brackets');
+            });
+            
+            document.querySelectorAll('.color-scheme-btn').forEach(btn => {
+                btn.classList.toggle('border-white', btn.dataset.scheme === 'blue-purple');
+            });
+            
+            // Apply changes immediately to all logos including loading screen
+            saveLogoSettings();
+            applyLogoToPage();
+            
+            showNotification('🔄 Logo reset to default', 'info');
+        }
+
+        // Auto-update logo when name changes
+        function updatePortfolioData(field, value) {
+            portfolioData[field] = value;
+            savePortfolioData();
+            
+            // Auto-update logo initials when name changes
+            if (field === 'name') {
+                logoSettings.initials = generateInitials(value);
+                saveLogoSettings();
+                applyLogoToPage();
+            }
+            
+            // Show save confirmation
+            showSaveConfirmation();
+        }
+
+        // Add input listener for real-time preview
+        document.addEventListener('DOMContentLoaded', function() {
+            const fullNameInput = document.getElementById('fullNameInput');
+            if (fullNameInput) {
+                fullNameInput.addEventListener('input', updateLogoPreview);
+            }
+        });
+
+        // Additional edit functions
+        function editExperience(icon) { editContent(icon); }
+        function editProject(icon) { editContent(icon); }
+        function editSkillCategory(icon) { editContent(icon); }
+        function editEducation(icon) { editContent(icon); }
+        function editCertification(icon) { editContent(icon); }
+        function editPublication(icon) { editContent(icon); }
+        function editAward(icon) { editContent(icon); }
+        function editActivity(icon) { editContent(icon); }
+        function editReference(icon) { editContent(icon); }
+
+        // Specialized edit functions for different content types
+        function editCardIcon(icon) {
+            const iconElement = icon.parentElement.querySelector('i[data-field]');
+            if (!iconElement) return;
+            
+            // Create icon selector modal
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4';
+            modal.innerHTML = `
+                <div class="glass rounded-2xl p-8 max-w-2xl w-full max-h-[80vh] overflow-y-auto">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="font-bold text-2xl text-white">Choose Icon</h2>
+                        <button onclick="this.closest('.fixed').remove()" class="text-white/70 hover:text-white">
+                            <i class="fas fa-times text-xl"></i>
+                        </button>
+                    </div>
+                    <div class="grid grid-cols-6 gap-4">
+                        ${[
+                            'fas fa-code', 'fas fa-brain', 'fas fa-mobile-alt', 'fas fa-chart-line', 
+                            'fas fa-database', 'fas fa-cloud', 'fas fa-cog', 'fas fa-rocket',
+                            'fas fa-laptop', 'fas fa-server', 'fas fa-shield-alt', 'fas fa-globe',
+                            'fas fa-lightbulb', 'fas fa-users', 'fas fa-heart', 'fas fa-star',
+                            'fas fa-trophy', 'fas fa-graduation-cap', 'fas fa-briefcase', 'fas fa-camera',
+                            'fas fa-music', 'fas fa-gamepad', 'fas fa-paint-brush', 'fas fa-book'
+                        ].map(iconClass => `
+                            <button onclick="selectIcon('${iconClass}', '${iconElement.getAttribute('data-field')}')" 
+                                    class="p-4 glass rounded-xl hover:bg-electric-blue/20 transition-colors text-center">
+                                <i class="${iconClass} text-2xl text-white"></i>
+                            </button>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+
+        function selectIcon(iconClass, fieldName) {
+            const iconElement = document.querySelector(`i[data-field="${fieldName}"]`);
+            if (iconElement) {
+                iconElement.className = iconClass;
+                updatePortfolioData(fieldName, iconClass);
+                showNotification('🎨 Icon updated!', 'success');
+            }
+            document.querySelector('.fixed.inset-0').remove();
+        }
+
+        function editTechTags(icon) {
+            const container = icon.parentElement;
+            const tagsContainer = container.querySelector('[data-field]');
+            const fieldName = tagsContainer.getAttribute('data-field');
+            
+            // Get current tags
+            const currentTags = Array.from(tagsContainer.querySelectorAll('span')).map(span => ({
+                text: span.textContent.trim(),
+                color: span.className.match(/text-(\w+)/)?.[1] || 'electric-blue'
+            }));
+            
+            // Create tags editor modal
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4';
+            modal.innerHTML = `
+                <div class="glass rounded-2xl p-8 max-w-2xl w-full">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="font-bold text-2xl text-white">Edit Technologies</h2>
+                        <button onclick="this.closest('.fixed').remove()" class="text-white/70 hover:text-white">
+                            <i class="fas fa-times text-xl"></i>
+                        </button>
+                    </div>
+                    <div id="tagsEditor" class="space-y-4 mb-6">
+                        ${currentTags.map((tag, index) => `
+                            <div class="flex gap-3 items-center">
+                                <input type="text" value="${tag.text}" 
+                                       class="flex-1 bg-white/5 border border-white/20 rounded-xl px-4 py-2 text-white">
+                                <select class="bg-white/5 border border-white/20 rounded-xl px-3 py-2 text-white">
+                                    <option value="electric-blue" ${tag.color === 'electric-blue' ? 'selected' : ''}>Blue</option>
+                                    <option value="cyber-purple" ${tag.color === 'cyber-purple' ? 'selected' : ''}>Purple</option>
+                                    <option value="gold" ${tag.color === 'gold' ? 'selected' : ''}>Gold</option>
+                                    <option value="neon-green" ${tag.color === 'neon-green' ? 'selected' : ''}>Green</option>
+                                    <option value="accent-pink" ${tag.color === 'accent-pink' ? 'selected' : ''}>Pink</option>
+                                    <option value="accent-teal" ${tag.color === 'accent-teal' ? 'selected' : ''}>Teal</option>
+                                </select>
+                                <button onclick="this.closest('.flex').remove()" class="text-red-400 hover:text-red-300 p-2">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="flex gap-4">
+                        <button onclick="addNewTag()" class="px-4 py-2 glass rounded-xl text-electric-blue border border-electric-blue/30">
+                            <i class="fas fa-plus mr-2"></i>Add Tag
+                        </button>
+                        <button onclick="saveTags('${fieldName}')" class="px-6 py-2 bg-gradient-to-r from-electric-blue to-cyber-purple rounded-xl text-white">
+                            Save Changes
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+
+        function addNewTag() {
+            const editor = document.getElementById('tagsEditor');
+            const newTagHTML = `
+                <div class="flex gap-3 items-center">
+                    <input type="text" placeholder="New technology" 
+                           class="flex-1 bg-white/5 border border-white/20 rounded-xl px-4 py-2 text-white">
+                    <select class="bg-white/5 border border-white/20 rounded-xl px-3 py-2 text-white">
+                        <option value="electric-blue">Blue</option>
+                        <option value="cyber-purple">Purple</option>
+                        <option value="gold">Gold</option>
+                        <option value="neon-green">Green</option>
+                        <option value="accent-pink">Pink</option>
+                        <option value="accent-teal">Teal</option>
+                    </select>
+                    <button onclick="this.closest('.flex').remove()" class="text-red-400 hover:text-red-300 p-2">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            `;
+            editor.insertAdjacentHTML('beforeend', newTagHTML);
+        }
+
+        function saveTags(fieldName) {
+            const editor = document.getElementById('tagsEditor');
+            const tagInputs = editor.querySelectorAll('.flex');
+            const tags = [];
+            
+            tagInputs.forEach(tagDiv => {
+                const input = tagDiv.querySelector('input');
+                const select = tagDiv.querySelector('select');
+                const text = input.value.trim();
+                const color = select.value;
+                
+                if (text) {
+                    tags.push({ text, color });
+                }
+            });
+            
+            // Update the tags container
+            const tagsContainer = document.querySelector(`[data-field="${fieldName}"]`);
+            tagsContainer.innerHTML = tags.map(tag => 
+                `<span class="px-3 py-1 bg-${tag.color}/20 text-${tag.color} rounded-full text-sm">${tag.text}</span>`
+            ).join('');
+            
+            // Save to portfolio data
+            updatePortfolioData(fieldName, tagsContainer.innerHTML);
+            
+            // Close modal
+            document.querySelector('.fixed.inset-0').remove();
+            showNotification('🏷️ Technologies updated!', 'success');
+        }
+
+        function editProjectIcon(icon) {
+            editCardIcon(icon);
+        }
+
+        function editProjectLinks(icon) {
+            const container = icon.parentElement;
+            const linksContainer = container.querySelector('[data-field]');
+            const fieldName = linksContainer.getAttribute('data-field');
+            
+            // Get current links
+            const currentLinks = Array.from(linksContainer.querySelectorAll('a')).map(link => ({
+                type: link.getAttribute('data-link') || 'github',
+                url: link.href,
+                icon: link.querySelector('i').className
+            }));
+            
+            // Create links editor modal
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4';
+            modal.innerHTML = `
+                <div class="glass rounded-2xl p-8 max-w-2xl w-full">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="font-bold text-2xl text-white">Edit Project Links</h2>
+                        <button onclick="this.closest('.fixed').remove()" class="text-white/70 hover:text-white">
+                            <i class="fas fa-times text-xl"></i>
+                        </button>
+                    </div>
+                    <div id="linksEditor" class="space-y-4 mb-6">
+                        ${currentLinks.map((link, index) => `
+                            <div class="flex gap-3 items-center">
+                                <select class="bg-white/5 border border-white/20 rounded-xl px-3 py-2 text-white">
+                                    <option value="github" ${link.type === 'github' ? 'selected' : ''}>GitHub</option>
+                                    <option value="demo" ${link.type === 'demo' ? 'selected' : ''}>Live Demo</option>
+                                    <option value="docs" ${link.type === 'docs' ? 'selected' : ''}>Documentation</option>
+                                    <option value="video" ${link.type === 'video' ? 'selected' : ''}>Video</option>
+                                </select>
+                                <input type="url" value="${link.url}" placeholder="https://..." 
+                                       class="flex-1 bg-white/5 border border-white/20 rounded-xl px-4 py-2 text-white">
+                                <button onclick="this.closest('.flex').remove()" class="text-red-400 hover:text-red-300 p-2">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="flex gap-4">
+                        <button onclick="addNewLink()" class="px-4 py-2 glass rounded-xl text-electric-blue border border-electric-blue/30">
+                            <i class="fas fa-plus mr-2"></i>Add Link
+                        </button>
+                        <button onclick="saveLinks('${fieldName}')" class="px-6 py-2 bg-gradient-to-r from-electric-blue to-cyber-purple rounded-xl text-white">
+                            Save Changes
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+
+        function addNewLink() {
+            const editor = document.getElementById('linksEditor');
+            const newLinkHTML = `
+                <div class="flex gap-3 items-center">
+                    <select class="bg-white/5 border border-white/20 rounded-xl px-3 py-2 text-white">
+                        <option value="github">GitHub</option>
+                        <option value="demo">Live Demo</option>
+                        <option value="docs">Documentation</option>
+                        <option value="video">Video</option>
+                    </select>
+                    <input type="url" placeholder="https://..." 
+                           class="flex-1 bg-white/5 border border-white/20 rounded-xl px-4 py-2 text-white">
+                    <button onclick="this.closest('.flex').remove()" class="text-red-400 hover:text-red-300 p-2">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            `;
+            editor.insertAdjacentHTML('beforeend', newLinkHTML);
+        }
+
+        function saveLinks(fieldName) {
+            const editor = document.getElementById('linksEditor');
+            const linkInputs = editor.querySelectorAll('.flex');
+            const links = [];
+            
+            linkInputs.forEach(linkDiv => {
+                const select = linkDiv.querySelector('select');
+                const input = linkDiv.querySelector('input');
+                const type = select.value;
+                const url = input.value.trim();
+                
+                if (url) {
+                    const iconMap = {
+                        github: 'fab fa-github',
+                        demo: 'fas fa-external-link-alt',
+                        docs: 'fas fa-book',
+                        video: 'fas fa-play'
+                    };
+                    links.push({ type, url, icon: iconMap[type] });
+                }
+            });
+            
+            // Update the links container
+            const linksContainer = document.querySelector(`[data-field="${fieldName}"]`);
+            linksContainer.innerHTML = links.map(link => 
+                `<a href="${link.url}" class="text-electric-blue hover:text-white transition-colors" data-link="${link.type}" target="_blank">
+                    <i class="${link.icon} text-xl"></i>
+                </a>`
+            ).join('');
+            
+            // Save to portfolio data
+            updatePortfolioData(fieldName, linksContainer.innerHTML);
+            
+            // Close modal
+            document.querySelector('.fixed.inset-0').remove();
+            showNotification('🔗 Project links updated!', 'success');
+        }
+
+        // Skill Item Editing
+        function editSkillItem(icon) {
+            const skillItem = icon.closest('.skill-item');
+            const nameElement = skillItem.querySelector('[data-field*="-name"]');
+            const levelElement = skillItem.querySelector('[data-field*="-level"]');
+            const progressBar = skillItem.querySelector('.skill-progress');
+            
+            if (!nameElement || !levelElement) return;
+            
+            // Hide edit icon during editing
+            icon.style.display = 'none';
+            
+            // Create editing interface
+            const editContainer = document.createElement('div');
+            editContainer.className = 'space-y-3 p-4 bg-slate-800 rounded-lg border-2 border-blue-400';
+            editContainer.innerHTML = `
+                <div>
+                    <label class="block text-sm text-white/70 mb-1">Skill Name</label>
+                    <input type="text" value="${nameElement.textContent.trim()}" 
+                           class="w-full bg-slate-700 border border-white/20 rounded px-3 py-2 text-white text-sm">
+                </div>
+                <div>
+                    <label class="block text-sm text-white/70 mb-1">Proficiency Level (%)</label>
+                    <input type="number" min="0" max="100" value="${parseInt(levelElement.textContent)}" 
+                           class="w-full bg-slate-700 border border-white/20 rounded px-3 py-2 text-white text-sm">
+                </div>
+                <div class="flex gap-2">
+                    <button class="save-skill bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded text-white text-sm">Save</button>
+                    <button class="cancel-skill bg-gray-600 hover:bg-gray-700 px-3 py-1 rounded text-white text-sm">Cancel</button>
+                </div>
+            `;
+            
+            // Store original content
+            const originalContent = skillItem.innerHTML;
+            
+            // Replace skill item content with editor
+            skillItem.innerHTML = '';
+            skillItem.appendChild(editContainer);
+            
+            // Focus first input
+            const nameInput = editContainer.querySelector('input[type="text"]');
+            const levelInput = editContainer.querySelector('input[type="number"]');
+            nameInput.focus();
+            nameInput.select();
+            
+            function saveSkill() {
+                const newName = nameInput.value.trim();
+                const newLevel = parseInt(levelInput.value);
+                
+                if (newName && newLevel >= 0 && newLevel <= 100) {
+                    // Restore original structure
+                    skillItem.innerHTML = originalContent;
+                    
+                    // Update values
+                    const updatedNameElement = skillItem.querySelector('[data-field*="-name"]');
+                    const updatedLevelElement = skillItem.querySelector('[data-field*="-level"]');
+                    const updatedProgressBar = skillItem.querySelector('.skill-progress');
+                    const updatedIcon = skillItem.querySelector('.edit-icon');
+                    
+                    if (updatedNameElement) {
+                        updatedNameElement.textContent = newName;
+                        updatePortfolioData(updatedNameElement.getAttribute('data-field'), newName);
+                    }
+                    
+                    if (updatedLevelElement) {
+                        updatedLevelElement.textContent = newLevel + '%';
+                        updatePortfolioData(updatedLevelElement.getAttribute('data-field'), newLevel + '%');
+                    }
+                    
+                    if (updatedProgressBar) {
+                        updatedProgressBar.setAttribute('data-width', newLevel);
+                        updatedProgressBar.style.width = newLevel + '%';
+                    }
+                    
+                    if (updatedIcon) {
+                        updatedIcon.style.display = 'flex';
+                    }
+                    
+                    showNotification(`✅ Updated ${newName} skill to ${newLevel}%!`, 'success');
+                } else {
+                    cancelSkill();
+                }
+            }
+            
+            function cancelSkill() {
+                skillItem.innerHTML = originalContent;
+                const restoredIcon = skillItem.querySelector('.edit-icon');
+                if (restoredIcon) {
+                    restoredIcon.style.display = 'flex';
+                }
+            }
+            
+            // Event listeners
+            editContainer.querySelector('.save-skill').addEventListener('click', saveSkill);
+            editContainer.querySelector('.cancel-skill').addEventListener('click', cancelSkill);
+            
+            // Keyboard shortcuts
+            nameInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    levelInput.focus();
+                } else if (e.key === 'Escape') {
+                    cancelSkill();
+                }
+            });
+            
+            levelInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    saveSkill();
+                } else if (e.key === 'Escape') {
+                    cancelSkill();
+                }
+            });
+        }
+
+        // Parallax Effect
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallaxElements = document.querySelectorAll('.floating-shape');
+            
+            parallaxElements.forEach((element, index) => {
+                const speed = 0.5 + (index * 0.1);
+                element.style.transform = `translateY(${scrolled * speed}px) rotate(${scrolled * 0.1}deg)`;
+            });
+        });
+
+        // Interactive Background
+        document.addEventListener('mousemove', (e) => {
+            const mouseX = e.clientX / window.innerWidth;
+            const mouseY = e.clientY / window.innerHeight;
+            
+            document.querySelectorAll('.floating-shape').forEach((shape, index) => {
+                const speed = (index + 1) * 0.02;
+                const x = (mouseX - 0.5) * speed * 100;
+                const y = (mouseY - 0.5) * speed * 100;
+                
+                shape.style.transform += ` translate(${x}px, ${y}px)`;
+            });
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'973459f622e05aca',t:'MTc1NTg4NjQ4My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
