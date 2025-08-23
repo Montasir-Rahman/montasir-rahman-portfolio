@@ -469,19 +469,16 @@
                     </div>
                     
                     <div class="flex flex-wrap gap-6">
-                        <button onclick="downloadResume()" class="group relative px-8 py-4 bg-gradient-to-r from-electric-blue to-cyber-purple rounded-xl font-semibold text-white overflow-hidden hover-lift glow">
-                            <span class="relative z-10 flex items-center">
-                                <i class="fas fa-download mr-3"></i>
-                                <span id="downloadResumeText">Download Resume</span>
-                            </span>
-                            <div class="absolute inset-0 bg-gradient-to-r from-cyber-purple to-electric-blue opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                        </button>
-                        <button id="uploadResumeBtn" class="group relative px-8 py-4 glass rounded-xl font-semibold text-white border border-electric-blue/30 hover-lift" style="display: none;">
-                            <span class="flex items-center">
-                                <i class="fas fa-upload mr-3"></i>
-                                Upload Resume
-                            </span>
-                        </button>
+                        <a href="https://raw.githubusercontent.com/Montasir-Rahman/montasir-rahman-portfolio/main/Montasir_Rahman_CV.pdf" download="Montasir_Rahman_CV.pdf" class="inline-block">
+                            <button class="group relative px-8 py-4 bg-gradient-to-r from-electric-blue to-cyber-purple rounded-xl font-semibold text-white overflow-hidden hover-lift glow">
+                                <span class="relative z-10 flex items-center">
+                                    <i class="fas fa-download mr-3"></i>
+                                    <span id="downloadResumeText">Download CV</span>
+                                </span>
+                                <div class="absolute inset-0 bg-gradient-to-r from-cyber-purple to-electric-blue opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            </button>
+                        </a>
+                
                         <button id="exportDataBtn" class="group relative px-6 py-3 glass rounded-xl font-semibold text-gold border border-gold/30 hover-lift" style="display: none;" onclick="exportPortfolioData()">
                             <span class="flex items-center">
                                 <i class="fas fa-file-export mr-2"></i>
