@@ -527,16 +527,16 @@
                     </div>
                 </div>
 
-                <div class="relative" data-aos="fade-left">
-                    <div class="editable relative">
-                        <i class="fas fa-edit edit-icon" onclick="editProfilePhoto(this)"></i>
-                        <div class="relative w-96 h-96 mx-auto">
-                            <!-- Animated Border -->
-                            <div class="absolute inset-0 bg-gradient-to-r from-electric-blue via-cyber-purple to-gold rounded-full animate-spin" style="animation-duration: 8s;"></div>
-                            <div class="absolute inset-2 bg-deep-charcoal rounded-full flex items-center justify-center overflow-hidden">
-                                <div id="profileImageContainer" class="w-80 h-80 bg-gradient-to-br from-electric-blue/20 to-cyber-purple/20 rounded-full flex items-center justify-center text-6xl text-white/50">
-                                    <i class="fas fa-user"></i>
-                                </div>
+                <div class="editable relative">
+                    <i class="fas fa-edit edit-icon" onclick="editProfilePhoto(this)"></i>
+                    <div class="relative w-96 h-96 mx-auto">
+                        <div class="absolute inset-0 bg-gradient-to-r from-electric-blue via-cyber-purple to-gold rounded-full animate-spin"
+                            style="animation-duration: 8s;"></div>
+                        <div class="absolute inset-2 bg-deep-charcoal rounded-full flex items-center justify-center overflow-hidden">
+                            <div id="profileImageContainer"
+                                class="w-80 h-80 bg-gradient-to-br from-electric-blue/20 to-cyber-purple/20 rounded-full flex items-center justify-center text-6xl text-white/50">
+                                <img src="https://raw.githubusercontent.com/Montasir-Rahman/montasir-rahman-portfolio/refs/heads/main/montasir_profile_image.png"
+                                    alt="Profile Photo" class="w-full h-full object-cover rounded-full">
                             </div>
                         </div>
                     </div>
@@ -2032,26 +2032,7 @@
 
         // Profile Photo Upload
         function editProfilePhoto(icon) {
-            const input = document.createElement('input');
-            input.type = 'file';
-            input.accept = 'image/*';
-            input.onchange = function(e) {
-                const file = e.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        const imageContainer = document.getElementById('profileImageContainer');
-                        imageContainer.innerHTML = `<img src="https://raw.githubusercontent.com/Montasir-Rahman/montasir-rahman-portfolio/refs/heads/main/montasir_profile_image.png" alt="Profile Photo" class="w-full h-full object-cover rounded-full">`;
-                        
-                        // Save image data
-                        portfolioData.profileImage = e.target.result;
-                        savePortfolioData();
-                        showNotification('📸 Profile photo updated!', 'success');
-                    };
-                    reader.readAsDataURL(file);
-                }
-            };
-            input.click();
+            showNotification('ℹ️ The profile photo is loaded from a permanent link and cannot be changed here.', 'info');
         }
 
         // Social Links Management
